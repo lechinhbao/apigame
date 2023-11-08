@@ -9,9 +9,9 @@ const mongoose = require("mongoose");
 
 const indexRouter = require('./routes/index');
 // const userAPIRouter = require('./routes/api/user');
-const productAPIRouter = require('./routes/api/product');
-const userCpanelRouter = require('./routes/cpanel/user');
-const productCpanelRouter = require('./routes/cpanel/Product');
+// const productAPIRouter = require('./routes/api/product');
+// const userCpanelRouter = require('./routes/cpanel/user');
+// const productCpanelRouter = require('./routes/cpanel/Product');
 
 var app = express();
 
@@ -37,11 +37,11 @@ app.use('/', indexRouter);
 // http://localhost:3000/api/user
 //app.use('/api/user', userAPIRouter);
 // http://localhost:3000/api/product
-app.use('/api/product', productAPIRouter);
-// http://localhost:3000/cpanel/user
-app.use('/cpanel/user', userCpanelRouter);
-// http://localhost:3000/cpanel/product
-app.use('/cpanel/product', productCpanelRouter);
+// app.use('/api/product', productAPIRouter);
+// // http://localhost:3000/cpanel/user
+// app.use('/cpanel/user', userCpanelRouter);
+// // http://localhost:3000/cpanel/product
+// app.use('/cpanel/product', productCpanelRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
