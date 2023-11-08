@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 
 
 const indexRouter = require('./routes/index');
-const userAPIRouter = require('./routes/api/user');
+// const userAPIRouter = require('./routes/api/user');
 const productAPIRouter = require('./routes/api/product');
 const userCpanelRouter = require('./routes/cpanel/user');
 const productCpanelRouter = require('./routes/cpanel/Product');
@@ -35,7 +35,7 @@ mongoose.connect("mongodb+srv://lechinhbao3477:03040509@knightsadventure.wjl5tfn
 // http://localhost:3000/
 app.use('/', indexRouter);
 // http://localhost:3000/api/user
-app.use('/api/user', userAPIRouter);
+//app.use('/api/user', userAPIRouter);
 // http://localhost:3000/api/product
 app.use('/api/product', productAPIRouter);
 // http://localhost:3000/cpanel/user
