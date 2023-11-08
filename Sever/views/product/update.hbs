@@ -1,0 +1,18 @@
+ <div class="form-container">
+        <h2>Thêm Mới</h2>
+        <form method="post" action="/cpanel/poduct/update">
+            <label for="name">Name:</label>
+            <input value="{{product.name}}" type="text" id="name" placeholder="Name" name="name"><br><br>
+            
+            <label for="level">Màn:</label>
+            <input value="{{product.man}}" type="number" id="level"  placeholder="Level" name="level"><br><br>
+            
+            <label for="score">Điểm:</label>
+            <input value="{{product.diem}}" type="number" id="score"  placeholder="Điễm" name="score"><br><br>
+            
+            <label for="coin">Coin:</label>
+            <input value="{{product.coin}}" type="number" id="coin"  placeholder="Coin" name="coin"><br><br>
+    
+            <button type="submit"> Submit</button>
+        </form>
+    </div>

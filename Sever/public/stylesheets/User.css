@@ -1,0 +1,202 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #1a0327;
+    font-family: 'Poppins', sans-serif;
+    height: 80vh;
+    color: #333;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/images/b11.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+header {
+    width: 100%;
+    height: 10vh;
+    background: rgba(6, 6, 6, 0.5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    width: 300px;
+    height: 10vh;
+    background: #550381;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    clip-path: polygon(0 0, 100% 0, 64% 100%, 0% 100%);
+    padding: 10px;
+    line-height: 1.3rem;
+
+}
+
+.logo .fas {
+    font-size: 50px;
+}
+
+.logo p {
+    width: 130px;
+    margin-left: 10px;
+    font-size: 20px;
+}
+
+ul.navbar {
+    display: flex;
+    list-style: none;
+}
+
+ul.navbar li {
+    width: 140px;
+    margin-left: 100px;
+}
+
+ul.navbar li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+}
+
+ul.navbar li a.active {
+    color: #fec53a;
+}
+
+ul.navbar li a:hover:not(.active) {
+    color: #fec53a;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-top: 70px;
+    font-family: 'YourGameFont', sans-serif;
+    font-size: 31px;
+    color: #fec53a;
+}
+
+/* Đặt màu nền cho trang */
+body {
+    background-color: #f2f2f2;
+}
+
+/* Đặt màu nền cho tiêu đề h1 và căn giữa nó */
+
+
+/* Đổ bóng cho nút */
+button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+/* Đặt margin và padding cho phần tử */
+#userForm {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    width: 97%;
+    height: 620px;
+}
+
+
+/* Tạo viền cho ảnh */
+img {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Tạo hiệu ứng hover cho ảnh */
+img:hover {
+    transform: scale(1.1);
+}
+
+.tableRank {
+    margin: 200px;
+}
+
+footer {
+    width: 100%;
+    height: 50vh;
+    background: #282828;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.footer-body {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+}
+
+.footer-logo {
+    height: 12vh;
+    background: #e0e3e0;
+    color: #000;
+    line-height: 1.7rem;
+    width: 450px;
+}
+
+ul h3 {
+    color: #fff;
+    font-weight: 450;
+}
+
+ul li {
+    list-style: none;
+    line-height: 2.5rem;
+}
+
+ul li a .fab {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #fec53a;
+    margin-right: 10px
+}
+
+ul li a {
+    text-decoration: none;
+    color: #fff;
+}
+
+ul li a:hover {
+    color: #fec53a;
+}
+
+.footer-logo h1 {
+    margin-top: 25px;
+    color: black;
+
+}
+
+table {
+    width: 80%;
+    /* Đặt chiều rộng của bảng là 80% của chiều rộng của trình duyệt */
+    margin: 0 auto;
+    /* Đặt kích thước lề tự động để căn giữa */
+    text-align: center;
+    /* Căn giữa nội dung của bảng */
+
+    color: aliceblue;
+}
+
+th,
+td {
+    padding: 10px;
+    /* Thêm một khoảng cách giữa các ô */
+}

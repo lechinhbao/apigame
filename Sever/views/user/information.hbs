@@ -1,0 +1,17 @@
+<body>
+    <div class="containerr">
+        <h1>Thông tin người chơi</h1>
+
+        <div class="player-info">
+            <span class="info-label">ID:</span> <p>{{rankId.id_user._id}}</p>
+            <span class="info-label">Email:</span><p>{{rankId.id_user.email}}</p>
+            <span class="info-label">Tên:</span> <p>{{rankId.id_user.name}}</p>
+            <span class="info-label">Mật khẩu:</span><p>{{rankId.id_user.password}} </p>
+            <span class="info-label">Màn:</span> <p>{{rankId.man}} </p>
+            <span class="info-label">Điểm:</span> <p>{{rankId.diem}}</p>
+            <span class="info-label">Coin:</span> <p>{{rankId.coin}}</p>
+        </div>
+        <button><a href="/fogetpassword/{{rankId.id_user._id}}">Đổi Mật Khẩu</a></button>
+        <!-- Thêm các player-info khác tương tự cho các người chơi khác -->
+    </div>
+</body>
