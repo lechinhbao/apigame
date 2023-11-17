@@ -25,6 +25,7 @@ const login = async(email,password)=>{
 const register = async(email,name,password)=>{
     try{
         const user = await User.findOne({email});
+        console.log("User service register",user);
         if(user){
             return false;
         }

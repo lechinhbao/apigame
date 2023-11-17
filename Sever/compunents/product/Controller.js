@@ -17,9 +17,9 @@ const deleteProductByID = async(id)=>{
 }
 
 
-const addProduct = async (id_user,man,diem,coin)=>{
+const addProduct = async (id,man,diem,coin)=>{
     try {
-        return await productService.addProduct(id_user,man,diem,coin);
+        return await productService.addProduct(id,man,diem,coin);
     } catch (error) {
         console.log(error);
     }

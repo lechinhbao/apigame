@@ -10,22 +10,12 @@ router.get('/', function (req, res, next) {
   res.render('index'); // render dung cho hien thi mot tran nao do
 });
 
-// http://localhost:3000/informationuser/:id
-router.get('/informationuser/:id', async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const rankId = await productController.getProductById(id);
-    if (rankId) {
-      console.log('product: ', rankId);
-      return res.render('user/information', { rankId });
-    }
-  } catch (error) {
-    console.log("Error: ", error);
-    next(error);
-  }
-
+// http://localhost:3000/Register
+router.get('/Register', function (req, res, next) {
+  res.render('user/register'); // render dung cho hien thi mot tran nao do
 });
 
+// http://localhost:3000/informationuser/:id
 
 
 // http://localhost:3000/fogetpassword
@@ -96,6 +86,29 @@ router.post('/login', async (req, res, next) => {
       return res.redirect('/informationuser/' + userId);
     }
     return res.redirect('/login');
+
+  } catch (error) {
+    next(error);
+    return res.status(500).json({ result: false });
+
+  }
+});
+
+router.post('/loginUser', async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const result = await userController.login(email, password);
+    if (result) {
+      let Usser = {
+        status: "true",
+        message: "Login thành công",
+        id: result._id,
+        coin: result.coin,
+        diem: result.diem,
+        man: result.man,
+      };
+      return res.status(200).json(Usser)
+    }
   } catch (error) {
     next(error);
     return res.status(500).json({ result: false });
@@ -104,17 +117,61 @@ router.post('/login', async (req, res, next) => {
 });
 
 
+
+
+
+// if(result){
+//   let Usser ={
+//     status :"true",
+//     message:"Login thành công",
+//     id: result._id,
+//     coin:result.coin,
+//     diem:result.diem,
+//     man:result.man,
+//   };
+//   return res.status(200).json(u)
+// }
+
+router.post('/informationuser/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const rankId = await productController.getProductById(id);
+    if (rankId) {
+      console.log('product: ', rankId);
+      return res.render('user/information', { rankId });
+    }
+    // return res.status(200).json({ status: 'true' });
+  } catch (error) {
+    console.log("Error: ", error);
+    next(error);
+  }
+});
+router.get('/informationuser/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const rankId = await productController.getProductById(id);
+    if (rankId) {
+      console.log('product: ', rankId);
+      return res.render('user/information', { rankId });
+    }
+    // return res.status(200).json({ status: 'true' });
+  } catch (error) {
+    console.log("Error: ", error);
+    next(error);
+  }
+});
+
 router.post('/register', async (req, res, next) => {
 
   try {
-    
+
     const { email, name, password } = req.body;
     const result = await userController.register(email, name, password);
     if (result) {
-      // res.redirect('/');
-      return res.status(200).json({ result: true });
+      return res.redirect('/login');
+      // return res.status(200).json({ result: true });
     }
-    return res.status(400).json({ result: false });
+    return res.redirect('/register');
   } catch (error) {
     next(error);
     return res.status(500).json({ result: false });
@@ -124,8 +181,8 @@ router.post('/register', async (req, res, next) => {
 
 router.post('/addnew', async (req, res, next) => {
   try {
-    const { id_user, man, diem, coin } = req.body;
-    const addnew = await productController.addProduct(id_user, man, diem, coin);
+    const { id, man, diem, coin } = req.body;
+    const addnew = await productController.addProduct(id, man, diem, coin);
     if (addnew) {
       return res.status(200).json({ addnew: true });
     }

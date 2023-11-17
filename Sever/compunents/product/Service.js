@@ -1,9 +1,9 @@
-const {Rank}= require('../Model');
+const { User}= require('../Model');
 
 
 const getAllRank = async () => {
   try {
-    return await Rank.find().populate("id_user").sort({"diem":-1});
+    return await User.find().populate("id").sort({"diem":-1});
   } catch (error) {
     console.log(error);
   }
@@ -22,18 +22,14 @@ const deleteProductByID = async (id) => {
   return false;
 }
 
-const addProduct = async (id_user, man, diem, coin) => {
+const addProduct = async (id, man, diem, coin) => {
   try {
-    let newRank = await Rank.findOne({id_user});
+    let newRank = await User.findById(id);
     console.log(">>>>>>>>>>>>", newRank);
     if(newRank){
       newRank.man = man ? man : newRank.man;
       newRank.diem = diem? diem : newRank.diem;
       newRank.coin = coin? coin : newRank.coin;
-      
-    }else{
-      newRank = new Rank({id_user,man,diem, coin});
-    
     }
     await newRank.save();
     return true;
@@ -45,16 +41,16 @@ const addProduct = async (id_user, man, diem, coin) => {
 
 const getProductById = async (id) => {
   try {
-    const rankUser = await Rank.findOne({id_user:id}).populate("id_user");
+    const rankUser = await User.findById(id);
    if(rankUser){
      return rankUser;
    }
-   return null;
+   return false;
 
   } catch (error) {
     console.log('get product by id error: ', e);
   }
-  return null;
+  return false;
 }
 
 const updateProductById = async (id, name, man, diem, coin) => {
