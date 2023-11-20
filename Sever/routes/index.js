@@ -101,13 +101,15 @@ router.post('/loginUser', async (req, res, next) => {
     if (result) {
       let Usser = {
         status: "true",
-        message: "Login thành công",
+        Notification: "Login thành công",
         id: result._id,
         coin: result.coin,
         diem: result.diem,
         man: result.man,
       };
       return res.status(200).json(Usser)
+    }else{
+      return res.status(200).json({status: "false", Notification:"tên đăng nhập hoặc mật khâu sai"});
     }
   } catch (error) {
     next(error);
@@ -115,22 +117,6 @@ router.post('/loginUser', async (req, res, next) => {
 
   }
 });
-
-
-
-
-
-// if(result){
-//   let Usser ={
-//     status :"true",
-//     message:"Login thành công",
-//     id: result._id,
-//     coin:result.coin,
-//     diem:result.diem,
-//     man:result.man,
-//   };
-//   return res.status(200).json(u)
-// }
 
 router.post('/informationuser/:id', async (req, res, next) => {
   try {
