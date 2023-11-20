@@ -108,8 +108,6 @@ router.post('/loginUser', async (req, res, next) => {
         man: result.man,
       };
       return res.status(200).json(Usser)
-    }else{
-      return res.status(200).json({status: "false", Notification:"tên đăng nhập hoặc mật khâu sai"});
     }
   } catch (error) {
     next(error);
