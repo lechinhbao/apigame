@@ -100,7 +100,7 @@ router.post('/loginUser', async (req, res, next) => {
     const result = await userController.login(email, password);
     if (result) {
       let Usser = {
-        status: "true",
+        status: 1,
         Notification: "Login thành công",
         id: result._id,
         coin: result.coin,
