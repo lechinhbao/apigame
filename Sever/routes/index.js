@@ -102,7 +102,7 @@ router.post('/loginUser', async (req, res, next) => {
       let Usser = {
         status: 1,
         Notification: "Login thành công",
-        name:result._name,
+        name: result.name,
         coin: result.coin,
         diem: result.diem,
         man: result.man,
