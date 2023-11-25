@@ -22,14 +22,31 @@ const deleteProductByID = async (id) => {
   return false;
 }
 
-const addProduct = async (id, man, diem, coin) => {
+const addProduct = async (id,name, man, diem, coin) => {
   try {
     let newRank = await User.findById(id);
     console.log(">>>>>>>>>>>>", newRank);
     if(newRank){
+      newRank.name = name ?  name : newRank.name;
       newRank.man = man ? man : newRank.man;
       newRank.diem = diem? diem : newRank.diem;
       newRank.coin = coin? coin : newRank.coin;
+    }
+    await newRank.save();
+    return true;
+  } catch (error) {
+    console.log('Add product error:', error);
+    return false;
+  }
+}
+
+const Savepoint = async (name,diem) => {
+  try {
+    let newRank = await User.findOne({name});
+    console.log(">>>>>>>>>>>>", newRank);
+    if(newRank){
+      newRank.name = name ?  name : newRank.name;
+      newRank.diem = diem? diem : newRank.diem;
     }
     await newRank.save();
     return true;
@@ -76,5 +93,5 @@ const updateProductById = async (id, name, man, diem, coin) => {
 
 }
 
-module.exports = { getAllRank, addProduct, getProductById,updateProductById };
+module.exports = { getAllRank, addProduct, getProductById,updateProductById,Savepoint};
  

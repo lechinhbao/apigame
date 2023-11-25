@@ -102,7 +102,7 @@ router.post('/loginUser', async (req, res, next) => {
       let Usser = {
         status: 1,
         Notification: "Login thành công",
-        id: result._id,
+        name:result._name,
         coin: result.coin,
         diem: result.diem,
         man: result.man,
@@ -165,8 +165,8 @@ router.post('/register', async (req, res, next) => {
 
 router.post('/addnew', async (req, res, next) => {
   try {
-    const { id, man, diem, coin } = req.body;
-    const addnew = await productController.addProduct(id, man, diem, coin);
+    const { id,name, man, diem, coin } = req.body;
+    const addnew = await productController.addProduct(id,name, man, diem, coin);
     if (addnew) {
       return res.status(200).json({ addnew: true });
     }
@@ -175,6 +175,22 @@ router.post('/addnew', async (req, res, next) => {
     return res.status(500).json({ addnew: false });
   }
 });
+
+
+router.post('/savepoint', async (req, res, next) => {
+  try {
+    const {name,diem,} = req.body;
+    const addnew = await productController.Savepoint(name,diem);
+    if (addnew) {
+      return res.status(200).json({  status: 1,
+        Notification: "lưu thành công",});
+    }
+    return res.status(400).json({ addnew: false })
+  } catch (error) {
+    return res.status(500).json({ addnew: false });
+  }
+});
+
 
 
 

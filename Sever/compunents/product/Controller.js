@@ -17,13 +17,24 @@ const deleteProductByID = async(id)=>{
 }
 
 
-const addProduct = async (id,man,diem,coin)=>{
+const addProduct = async (id,name,man,diem,coin)=>{
     try {
-        return await productService.addProduct(id,man,diem,coin);
+        return await productService.addProduct(id,name,man,diem,coin);
     } catch (error) {
         console.log(error);
     }
 }
+
+
+const Savepoint = async (name,diem)=>{
+    try {
+        return await productService.Savepoint(name,diem);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
 
 const getProductById = async (id) =>{
     try{
@@ -36,4 +47,4 @@ const getProductById = async (id) =>{
 const updateProductById = async (id,name,man, diem, coin) =>{
 
 }
-module.exports = {getAllRank,updateProductById,deleteProductByID,addProduct,getProductById};
+module.exports = {getAllRank,updateProductById,deleteProductByID,addProduct,getProductById,Savepoint};
