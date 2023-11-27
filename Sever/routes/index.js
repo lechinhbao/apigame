@@ -179,8 +179,8 @@ router.post('/addnew', async (req, res, next) => {
 
 router.post('/savepoint', async (req, res, next) => {
   try {
-    const {name,diem,} = req.body;
-    const addnew = await productController.Savepoint(name,diem);
+    const {name,diem,coin} = req.body;
+    const addnew = await productController.Savepoint(name,diem,coin);
     if (addnew) {
       return res.status(200).json({  status: 1,
         Notification: "lưu thành công",});

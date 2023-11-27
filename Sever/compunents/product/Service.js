@@ -40,13 +40,14 @@ const addProduct = async (id,name, man, diem, coin) => {
   }
 }
 
-const Savepoint = async (name,diem) => {
+const Savepoint = async (name,diem,coin) => {
   try {
     let newRank = await User.findOne({name});
     console.log(">>>>>>>>>>>>", newRank);
     if(newRank){
       newRank.name = name ?  name : newRank.name;
       newRank.diem = diem? diem : newRank.diem;
+      newRank.diem = coin? coin : newRank.coin;
     }
     await newRank.save();
     return true;
