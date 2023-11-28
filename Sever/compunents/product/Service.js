@@ -47,7 +47,8 @@ const Savepoint = async (name,diem,coin) => {
     if(newRank){
       newRank.name = name ?  name : newRank.name;
       newRank.diem = diem? diem : newRank.diem;
-      newRank.diem = coin? coin : newRank.coin;
+      newRank.coin = coin? coin : newRank.coin;
+     
     }
     await newRank.save();
     return true;
