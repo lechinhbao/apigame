@@ -10,6 +10,8 @@ const UserSchema = new Schema({
     diem:{type: Number},
     man:{type: Number},
     coin:{type: Number},
+    otp:{type: Number},
+
 });
 
 let User = mongoose.model("User",UserSchema);

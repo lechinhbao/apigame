@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+const session = require('express-session');
 const mongoose = require("mongoose");
 
 
@@ -24,7 +24,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-mongoose.connect("mongodb+srv://lechinhbao3477:03040509@knightsadventure.wjl5tfn.mongodb.net/?retryWrites=true&w=majority",  {
+app.use(session({
+  secret: 'iloveyou',
+  resave: true,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}))
+
+mongoose.connect("mongodb+srv://lechinhbao3477:03040509@knightsadventure.wjl5tfn.mongodb.net/?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
@@ -44,12 +51,12 @@ app.use('/', indexRouter);
 // app.use('/cpanel/product', productCpanelRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

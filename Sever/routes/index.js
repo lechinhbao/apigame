@@ -3,6 +3,7 @@ var router = express.Router();
 const userController = require('../compunents/user/Controller');
 const productController = require('../compunents/product/Controller');
 const { checkRegister } = require('../compunents/midle/Validation');
+const { checkTokenWeb } = require('../compunents/midle/Authen');
 
 
 // http://localhost:3000/
@@ -83,6 +84,8 @@ router.post('/login', async (req, res, next) => {
     const result = await userController.login(email, password);
     if (result) {
       const userId = result._id;
+      //const token = jwt.sign({id:1,name:'abc'},'secret',{expiresIn: 1 *60 *60});
+      // req.session.token = token;
       return res.redirect('/informationuser/' + userId);
     }
     return res.redirect('/login');
@@ -109,6 +112,7 @@ router.post('/loginUser', async (req, res, next) => {
       };
       return res.status(200).json(Usser)
     }
+
   } catch (error) {
     next(error);
     return res.status(500).json({ result: false });
@@ -145,28 +149,70 @@ router.get('/informationuser/:id', async (req, res, next) => {
   }
 });
 
-router.post('/register', async (req, res, next) => {
+// router.post('/register', async (req, res, next) => {
+
+//   try {
+
+//     const { email, name, password } = req.body;
+//     const result = await userController.register(email, name, password);
+//     if (result) {
+//       return res.redirect('/login');
+//       // return res.status(200).json({ result: true });
+//     }
+//     return res.redirect('/register');
+//   } catch (error) {
+//     next(error);
+//     return res.status(500).json({ result: false });
+//   }
+// });
+
+
+
+router.get('/logout', [checkTokenWeb], async (req, res, next) => {
 
   try {
+    res.session.destroy();
+    return res.redirect('/login');
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
 
+
+
+router.post('/register', async (req, res, next) => {
+  try {
     const { email, name, password } = req.body;
     const result = await userController.register(email, name, password);
-    if (result) {
+
+    if (result.success) {
+      const to = email;
+      const subject = "Chúc mừng bạn đã đăng kí thành công";
+      const content = `<h1>xin chao ban ${name}toi game sinh ton </h1>`;
+      const result = await userController.sendMail(to, subject, content);
       return res.redirect('/login');
-      // return res.status(200).json({ result: true });
+    } else {
+      // Log thông báo lỗi
+      console.error('Error during registration:', result.message);
+      return res.render('user/register', {message: result.message});
+
+      // Thêm thông báo lỗi vào URL hoặc chuyển đến trang đăng ký với thông báo
+      // return res.redirect(`/register?error=${result.message}`);
     }
-    return res.redirect('/register');
   } catch (error) {
+    // Log lỗi khi có exception
+    console.error('Error in /register route:', error);
     next(error);
     return res.status(500).json({ result: false });
   }
-
 });
+
 
 router.post('/addnew', async (req, res, next) => {
   try {
-    const { id,name, man, diem, coin } = req.body;
-    const addnew = await productController.addProduct(id,name, man, diem, coin);
+    const { id, name, man, diem, coin } = req.body;
+    const addnew = await productController.addProduct(id, name, man, diem, coin);
     if (addnew) {
       return res.status(200).json({ addnew: true });
     }
@@ -179,11 +225,13 @@ router.post('/addnew', async (req, res, next) => {
 
 router.post('/savepoint', async (req, res, next) => {
   try {
-    const {name,diem,coin} = req.body;
-    const addnew = await productController.Savepoint(name,diem,coin);
+    const { name, diem, coin } = req.body;
+    const addnew = await productController.Savepoint(name, diem, coin);
     if (addnew) {
-      return res.status(200).json({  status: 1,
-        Notification: "lưu thành công",});
+      return res.status(200).json({
+        status: 1,
+        Notification: "lưu thành công",
+      });
     }
     return res.status(400).json({ addnew: false })
   } catch (error) {
@@ -192,6 +240,95 @@ router.post('/savepoint', async (req, res, next) => {
 });
 
 
+
+
+
+router.post('/sendmail', async (req, res, next) => {
+  try {
+    const { to, subject } = req.body;
+    let name = 'nguyen van a'
+    const content = `
+    <h1> Chuc mung ban dang ki thanh cong ${name} </h1>
+    <h2>Chuc mung den voi advandtuknghit</h2>
+    `;
+    const result = await userController.sendMail(to, subject, content);
+    return res.status(200).json({ result });
+
+  } catch (error) {
+    console.log('Sendmail error:', error);
+    return res.status(500).json({ result: false });
+  }
+});
+
+
+
+router.post('/senotpmail', async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const sendmail = await userController.sendotp(email);
+    if (sendmail) {
+      const to = sendmail.email;
+      console.log(to);
+      const id = sendmail._id;
+      const otp = Ngaunhien();
+      const subject = "Xac nhan tai khoan";
+      const content = `<div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
+    <div style="margin:50px auto;width:70%;padding:20px 0">
+      <div style="border-bottom:1px solid #eee">
+        <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Your Brand</a>
+      </div>
+      <p style="font-size:1.1em">Hi,</p>
+      <p>Thank you for choosing Your Brand. Use the following OTP to complete your Sign Up procedures. OTP is valid for 5 minutes</p>
+      <h2 style="background: #00466a;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">${otp}</h2>
+      <p style="font-size:0.9em;">Regards,<br />Your Brand</p>
+      <hr style="border:none;border-top:1px solid #eee" />
+      <div style="float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300">
+        <p>Your Brand Inc</p>
+        <p>1600 Amphitheatre Parkway</p>
+        <p>California</p>
+      </div>
+    </div>
+  </div>`;
+      const addotp = await userController.addotp(id, otp);
+      const result = await userController.sendMail(to, subject, content);
+      return res.status(200).json({ status: result, email: to });
+    }
+    else {
+      return res.status(400).json({ message: "tài khoản không tồn tại" });
+    }
+  } catch (error) {
+
+    console.log("fail to send mail", error);
+    return res.status(500).json({ status: false });
+
+  }
+});
+
+function Ngaunhien() {
+  // Sinh số ngẫu nhiên từ 1000 đến 9999
+  let fourDigitNumber = Math.floor(Math.random() * 9000) + 1000;
+  return fourDigitNumber;
+}
+
+
+
+router.post("/resetPassword", async (req, res, next) => {
+
+  try {
+    const { email, password, otp } = req.body;
+    const resetPassword = await userController.resetPassword(email, password, otp);
+    if (resetPassword) {
+      return res.status(200).json({ status: true, message: "doi ma khau thanh cong" });
+    }
+    console.log(">>>>>>>>", resetPassword);
+    return res.status(200).json({ status: false, message: "otp khong dung" });
+
+  } catch (error) {
+    console.log("failed to reset password", error);
+    return res.status(500).json({ status: false });
+  }
+
+});
 
 
 
