@@ -25,6 +25,14 @@ router.get('/fogetpassword/:id', async (req, res, next) => {
   res.render('user/rewordpassword', { id }); // render dung cho hien thi mot tran nao do
 });
 
+router.get('/ResetOTP', function (req, res, next) {
+  res.render('user/Resetotp'); // render tới trang quen mật khẩu và otp
+});
+
+router.get('/ResetPasswordOTP', function (req, res, next) {
+  res.render('user/ResetPasswordOTP'); // render tới trang quen mật khẩu và otp
+});
+
 
 router.post('/fogetpassword/:id', async (req, res, next) => {
   try {
@@ -291,7 +299,8 @@ router.post('/senotpmail', async (req, res, next) => {
   </div>`;
       const addotp = await userController.addotp(id, otp);
       const result = await userController.sendMail(to, subject, content);
-      return res.status(200).json({ status: result, email: to });
+      return res.render('user/ResetPasswordOTP');
+      // cần sữa lại thành chỗ của nhập mã otp và mật khẩu mới 
     }
     else {
       return res.status(400).json({ message: "tài khoản không tồn tại" });
@@ -318,14 +327,14 @@ router.post("/resetPassword", async (req, res, next) => {
     const { email, password, otp } = req.body;
     const resetPassword = await userController.resetPassword(email, password, otp);
     if (resetPassword) {
-      return res.status(200).json({ status: true, message: "doi ma khau thanh cong" });
+      return res.render('user/login');
     }
     console.log(">>>>>>>>", resetPassword);
     return res.status(200).json({ status: false, message: "otp khong dung" });
 
   } catch (error) {
     console.log("failed to reset password", error);
-    return res.status(500).json({ status: false });
+    return res.status(500).json({ status: false, message: "Sever không phản hồi" });
   }
 
 });

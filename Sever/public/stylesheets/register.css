@@ -1,5 +1,7 @@
 
-
+body{
+    height: 300px;
+}
 form {
     display: flex;
     flex-direction: column;
@@ -28,3 +30,19 @@ button {
 button:hover {
     background-color: #45a049;
 }
+/* Thêm CSS sau vào mã của bạn */
+
+.text {
+    font-size: 18px; /* Đặt kích thước font chữ */
+    color: red; /* Đặt màu chữ */
+    font-weight: bold; /* Đặt độ đậm của font chữ */
+    margin-top: 10px; /* Đặt khoảng cách trên */
+}
+
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }

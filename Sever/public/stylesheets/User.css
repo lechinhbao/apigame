@@ -5,18 +5,24 @@
 }
 
 body {
-    background: #1a0327;
+  
     font-family: 'Poppins', sans-serif;
-    height: 80vh;
-    color: #333;
+    color: #fff;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .container {
     width: 100%;
-    height: 100vh;
+    flex: 1;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(/images/b11.jpg);
     background-size: cover;
     background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 header {
@@ -28,69 +34,15 @@ header {
     align-items: center;
 }
 
-.logo {
-    width: 300px;
-    height: 10vh;
-    background: #550381;
-    display: flex;
-    align-items: center;
-    color: #fff;
-    clip-path: polygon(0 0, 100% 0, 64% 100%, 0% 100%);
-    padding: 10px;
-    line-height: 1.3rem;
-
-}
-
-.logo .fas {
-    font-size: 50px;
-}
-
-.logo p {
-    width: 130px;
-    margin-left: 10px;
-    font-size: 20px;
-}
-
-ul.navbar {
-    display: flex;
-    list-style: none;
-}
-
-ul.navbar li {
-    width: 140px;
-    margin-left: 100px;
-}
-
-ul.navbar li a {
-    text-decoration: none;
-    color: #fff;
-    font-weight: 600;
-}
-
-ul.navbar li a.active {
-    color: #fec53a;
-}
-
-ul.navbar li a:hover:not(.active) {
-    color: #fec53a;
-}
+/* ... (your existing styles) */
 
 h1 {
-    color: #333;
     text-align: center;
     margin-top: 70px;
     font-family: 'YourGameFont', sans-serif;
     font-size: 31px;
     color: #fec53a;
 }
-
-/* Đặt màu nền cho trang */
-body {
-    background-color: #f2f2f2;
-}
-
-/* Đặt màu nền cho tiêu đề h1 và căn giữa nó */
-
 
 /* Đổ bóng cho nút */
 button {
@@ -102,16 +54,15 @@ button {
     cursor: pointer;
 }
 
-
 /* Đặt margin và padding cho phần tử */
 #userForm {
     padding: 20px;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 5px;
-    width: 97%;
-    height: 620px;
+    width: 80%;
+    max-width: 600px;
+    margin: 20px auto;
 }
-
 
 /* Tạo viền cho ảnh */
 img {
@@ -125,16 +76,49 @@ img:hover {
 }
 
 .tableRank {
-    margin: 200px;
+    margin: 20px auto;
+    width: 900px;
+    height: calc(2/3 * 100vh);
+    overflow: auto;
+    position: relative;
+    /* Đặt kiểu hiển thị "relative" */
 }
 
+.tableWrapper {
+    display: block;
+}
+
+table {
+    width: 100%;
+    text-align: center;
+    color: aliceblue;
+    display: table;
+    border-collapse: collapse;
+    /* Nếu không muốn có khoảng trống giữa ô */
+}
+
+th,
+td {
+    padding: 15px;
+    border: 1px solid #fff;
+}
+
+thead {
+    position: sticky;
+    top: 0;
+    /* Giữ đỉnh bảng cố định khi cuộn */
+    background-color: #282828;
+    /* Màu nền của phần thead */
+    z-index: 1;
+    /* Đặt độ ưu tiên Z để đảm bảo nó hiển thị trên phần nội dung */
+}
+
+
+/* Chỉnh sửa cho footer */
 footer {
     width: 100%;
-    height: 50vh;
     background: #282828;
-    display: flex;
-    align-items: center;
-    position: relative;
+    padding: 20px 0;
 }
 
 .footer-body {
@@ -142,6 +126,8 @@ footer {
     margin: auto;
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
+    /* Đảm bảo các phần tử trong footer xuống dòng khi không đủ không gian */
 }
 
 .footer-logo {
@@ -150,6 +136,8 @@ footer {
     color: #000;
     line-height: 1.7rem;
     width: 450px;
+    margin-bottom: 20px;
+    /* Khoảng cách giữa footer và nội dung */
 }
 
 ul h3 {
@@ -166,7 +154,7 @@ ul li a .fab {
     margin-bottom: 10px;
     font-size: 1rem;
     color: #fec53a;
-    margin-right: 10px
+    margin-right: 10px;
 }
 
 ul li a {
@@ -181,22 +169,4 @@ ul li a:hover {
 .footer-logo h1 {
     margin-top: 25px;
     color: black;
-
-}
-
-table {
-    width: 80%;
-    /* Đặt chiều rộng của bảng là 80% của chiều rộng của trình duyệt */
-    margin: 0 auto;
-    /* Đặt kích thước lề tự động để căn giữa */
-    text-align: center;
-    /* Căn giữa nội dung của bảng */
-
-    color: aliceblue;
-}
-
-th,
-td {
-    padding: 10px;
-    /* Thêm một khoảng cách giữa các ô */
 }

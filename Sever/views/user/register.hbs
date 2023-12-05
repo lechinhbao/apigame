@@ -1,22 +1,24 @@
 <body>
-     <title>Registration Form</title>
-    <div class="container">
-        <form  method="post" action="/register">
-            <h2>Registration Form</h2>
-            <label for="email">Email:</label>
-           <input type="email" class="input" placeholder="Email" name="email" required>
-           
+    <div class="box">
+        <title>Registration Form</title>
+        <div class="containerr">
+            <form method="post" action="/register">
+                <h2>Registration Form</h2>
+                <label for="email">Email:</label>
+                <input type="email" class="input" placeholder="Email" name="email" required>
 
-            <label for="name">Name:</label>
-           <input type="name" class="input" placeholder="Name" name="name" required>
 
-            <label for="password">Password:</label>
-            <input type="password" class="input" placeholder="Password" name="password" required>
-            <text>{{message}}</text>
+                <label for="name">Name:</label>
+                <input type="name" class="input" placeholder="Name" name="name" required>
 
-            <button type="submit">Register</button>
-        </form>
+                <label for="password">Password:</label>
+                <input type="password" class="input" placeholder="Password" name="password" required>
+                <text>{{message}}</text>
 
-        <p id="registrationStatus"></p>
+                <button type="submit">Register</button>
+            </form>
+
+            <p id="registrationStatus"></p>
+        </div>
     </div>
 </body>
