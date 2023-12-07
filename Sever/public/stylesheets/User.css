@@ -78,7 +78,7 @@ img:hover {
 .tableRank {
     margin: 20px auto;
     width: 900px;
-    height: calc(2/3 * 100vh);
+    height: calc(2/3 * 120vh);
     overflow: auto;
     position: relative;
     /* Đặt kiểu hiển thị "relative" */
@@ -131,7 +131,7 @@ footer {
 }
 
 .footer-logo {
-    height: 12vh;
+    height: 22vh;
     background: #e0e3e0;
     color: #000;
     line-height: 1.7rem;
@@ -167,6 +167,5 @@ ul li a:hover {
 }
 
 .footer-logo h1 {
-    margin-top: 25px;
-    color: black;
+    margin-top: 2px;
 }

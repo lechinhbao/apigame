@@ -341,5 +341,24 @@ router.post("/resetPassword", async (req, res, next) => {
 
 
 
+router.post("/resetPassword", async (req, res, next) => {
+
+  try {
+    const { email, password, otp } = req.body;
+    const resetPassword = await userController.resetPassword(email, password, otp);
+    if (resetPassword) {
+      return res.render('user/login');
+    }
+    console.log(">>>>>>>>", resetPassword);
+    return res.status(200).json({ status: false, message: "otp khong dung" });
+
+  } catch (error) {
+    console.log("failed to reset password", error);
+    return res.status(500).json({ status: false, message: "Sever không phản hồi" });
+  }
+
+});
+
+
 
 module.exports = router;
