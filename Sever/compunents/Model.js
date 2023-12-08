@@ -11,6 +11,8 @@ const UserSchema = new Schema({
     man:{type: Number},
     coin:{type: Number},
     otp:{type: Number},
+    roll:{type: Number},
+    key:{type: Number},
 
 });
 

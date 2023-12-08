@@ -9,6 +9,15 @@ const login = async (email, password) => {
     }
 }
 
+const loginAdmin = async (email, password, roll) => {
+    try {
+        return await userService.loginAdmin(email, password, roll);
+    } catch (error) {
+        throw error;
+    }
+}
+
+
 const register = async (email, name, password) => {
     try {
         return await userService.register(email, name, password);
@@ -78,4 +87,4 @@ const sendMail = async (to, subject, content) => {
 }
 
 
-module.exports = { login, register, changePassword, sendMail,addotp,sendotp,resetPassword};
+module.exports = { login, register, changePassword, sendMail,addotp,sendotp,resetPassword,loginAdmin};

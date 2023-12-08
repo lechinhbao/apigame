@@ -42,36 +42,70 @@ const login = async (email, password) => {
 };
 
 
-const register = async (email, name, password) => {
+const loginAdmin = async (email, password) => {
+  try {
+    // Kiểm tra email và mật khẩu
+    const user = await User.findOne({ email });
+    if (user) {
+      const passwordMatch = await bcrypt.compare(password, user.password);
+      if (passwordMatch) {
+        // Kiểm tra vai trò
+        if (user.roll === 1) {
+          // Vai trò là 1, đăng nhập thành công
+          return user;
+        } else {
+          // Vai trò không phù hợp
+          return { success: false, code: 'INVALID_ROLE', message: 'Vai trò không phù hợp' };
+        }
+      }
+    }
+
+    // Email hoặc mật khẩu không đúng
+    return { success: false, code: 'INVALID_CREDENTIALS', message: 'Email hoặc mật khẩu không đúng' };
+  } catch (error) {
+    console.error('User service login error', error);
+    return { success: false, code: 'LOGIN_ERROR', message: 'Đã có lỗi xảy ra trong quá trình đăng nhập' };
+  }
+};
+
+
+const register = async (email, name, password, roll,key) => {
   try {
     // Kiểm tra email
     const userWithEmail = await User.findOne({ email });
     if (userWithEmail) {
       console.log('Email đã tồn tại:', email);
-      return { success: false, message: 'Email đã tồn tại' };
+      return { success: false, code: 'EMAIL_EXISTS', message: 'Email đã tồn tại' };
     }
+
     // Kiểm tra tên người dùng
     const userWithName = await User.findOne({ name });
     if (userWithName) {
       console.log('Tên người dùng đã tồn tại:', name);
-      return { success: false, message: "Tên người dùng đã tồn tại" };
+      return { success: false, code: 'USERNAME_EXISTS', message: "Tên người dùng đã tồn tại" };
     }
+
+    // Kiểm tra mật khẩu
     if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password)) {
-      return { success: false, message: "mat khau phai co du 8 ki tu co chu va so " };
+      return { success: false, code: 'INVALID_PASSWORD', message: "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ và số" };
     }
+
+    // Thực hiện đăng ký
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
-    // Nếu không có email hoặc tên người dùng trùng lặp, thực hiện đăng ký
-    const newUser = new User({ email, name, password: hash });
+
+    // Thêm các kiểm tra khác nếu cần thiết cho tên người dùng
+
+    // Gán giá trị roll theo mong muốn (ví dụ, 0)
+    const newUser = new User({ email, name, password: hash, roll: roll || 0 ,key: key || 0});
     await newUser.save();
     console.log('Đăng ký thành công:', email);
-    return { success: true, message: 'Đăng ký thành công' };
+    return { success: true, code: 'REGISTER_SUCCESS', message: 'Đăng ký thành công' };
   } catch (error) {
     console.error('User service register error', error);
-    return { success: false, message: 'Đã có lỗi xảy ra trong quá trình đăng ký' };
+    return { success: false, code: 'REGISTER_ERROR', message: 'Đã có lỗi xảy ra trong quá trình đăng ký' };
   }
 };
-
 
 
 
@@ -195,5 +229,5 @@ const resetPassword = async (email, newPassword, otp) => {
 
 
 
-module.exports = { login, register, changePassword, addotp, sendotp, resetPassword };
+module.exports = { login, register, changePassword, addotp, sendotp, resetPassword,loginAdmin };
 

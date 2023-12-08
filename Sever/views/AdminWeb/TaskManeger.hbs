@@ -24,7 +24,7 @@
                             <th>Màn</th>
                             <th>Điểm</th>
                             <th>Coin</th>
-                            <th>Trạng Thái</th>
+                            <th class="button-key">Trạng Thái</th>
                             <th>Tools</th>
                         </tr>
                     </thead>
@@ -36,13 +36,8 @@
                             <td>{{this.man}}</td>
                             <td>{{this.diem}}</td>
                             <td>{{this.coin}}</td>
-                            <td>
-                                <select>
-                                    <option >Không ban</option>
-                                    <option >Đã ban</option>
-                                </select>
-                            </td>
-                            <td><button>Xóa</button>|<button>Sữa</button></td>
+                            <td id="statusCell">Hoạt động</td>
+                            <td><button>Xóa</button>|<button onclick="toggleStatus({{this._id}})">Khóa</button></td>
                         </tr>
                         {{/each}}
                     </tbody>
@@ -86,4 +81,19 @@
                 <li><a href="#">Arcade</a></li>
             </ul>
         </div>
+        <script>
+            var statusValue = 0; // Biến trạng thái (0 hoặc 1)
+            function toggleStatus() {
+                // Lấy phần tử td theo id
+                var statusCell = document.getElementById('statusCell');
+                // Kiểm tra giá trị trạng thái và thay đổi nó
+                if (statusValue === 0) {
+                    statusCell.innerHTML = 'Hoạt động';
+                    statusValue = 1; // Chuyển đổi giá trị trạng thái
+                } else {
+                    statusCell.innerHTML = 'Không hoạt động';
+                    statusValue = 0; // Chuyển đổi giá trị trạng thái
+                }
+            }
+        </script>
 </body>

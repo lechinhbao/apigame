@@ -34,7 +34,7 @@ const deleteProductByID = async (id) => {
   return false;
 }
 
-const addProduct = async (id, name, man, diem, coin) => {
+const addProduct = async (id, name, man, diem, coin,roll) => {
   try {
     let newRank = await User.findById(id);
     console.log(">>>>>>>>>>>>", newRank);
@@ -43,6 +43,7 @@ const addProduct = async (id, name, man, diem, coin) => {
       newRank.man = man ? man : newRank.man;
       newRank.diem = diem ? diem : newRank.diem;
       newRank.coin = coin ? coin : newRank.coin;
+      newRank.roll = roll ? roll : newRank.roll;
     }
     await newRank.save();
     return true;

@@ -1,0 +1,30 @@
+<body>
+    <div class="box">
+        <title>Registration Form</title>
+        <div class="containerr">
+            <div class="top-header">
+                <h2>Login Admin</h2>
+            </div>
+            <form class="user" method="post" action="/loginAdmin">
+                <div class="input-field">
+                    <input type="email" class="input" placeholder="Email" name="email" required>
+                    <i class="bx bx-user"></i>
+                </div>
+                <div class="input-field">
+                    <input type="password" class="input" placeholder="Password" name="password" required>
+                    <i class="bx bx-lock-alt"></i>
+                </div>
+                <text>{{message}}</text>
+                <button type="submit">
+                    Login
+                </button>
+            </form>
+            {{!-- <div class="bottom">
+                <div class="Right">
+                    <label><a href="/ResetOTP">Forgot a Password ?</a></label>
+                </div>
+            </div> --}}
+        </div>
+
+    </div>
+</body>

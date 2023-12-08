@@ -106,10 +106,15 @@ router.post('/login', async (req, res, next) => {
     const { email, password } = req.body;
     const result = await userController.login(email, password);
     if (result) {
-      const userId = result._id;
+      if (result.roll === 1) {
+        return res.redirect('/webAdmin')
+      }else{
+        const userId = result._id;
       //const token = jwt.sign({id:1,name:'abc'},'secret',{expiresIn: 1 *60 *60});
       // req.session.token = token;
       return res.redirect('/informationuser/' + userId);
+      }
+      
     }
     return res.redirect('/login');
 
@@ -234,8 +239,8 @@ router.post('/register', async (req, res, next) => {
 
 router.post('/addnew', async (req, res, next) => {
   try {
-    const { id, name, man, diem, coin } = req.body;
-    const addnew = await productController.addProduct(id, name, man, diem, coin);
+    const { id, name, man, diem, coin,roll } = req.body;
+    const addnew = await productController.addProduct(id, name, man, diem, coin,roll);
     if (addnew) {
       return res.status(200).json({ addnew: true });
     }
@@ -261,10 +266,6 @@ router.post('/savepoint', async (req, res, next) => {
     return res.status(500).json({ addnew: false });
   }
 });
-
-
-
-
 
 router.post('/sendmail', async (req, res, next) => {
   try {
@@ -391,6 +392,39 @@ router.post("/resetPassword", async (req, res, next) => {
   }
 });
 
+
+
+router.get("/loginAdmin", async (req, res, next) => {
+  res.render('AdminWeb/loginAdmin');  
+});
+
+
+router.post("/loginAdmin", async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    // Gọi hàm đăng nhập từ service
+    const loginResult = await userController.loginAdmin(email, password);
+
+    if (loginResult.success) {
+      // Đăng nhập thành công và kiểm tra vai trò
+      if (loginResult.user.roll === 1) {
+        // Nếu vai trò là 1, chuyển hướng đến trang taskmanager
+        return res.redirect('/webAdmin');
+      } else {
+        // Nếu vai trò không phù hợp, trả về thông báo lỗi
+        console.error('Error during registration:', loginResult.message);
+        return res.render('AdminWeb/loginAdmin', { message: loginResult.message });
+      }
+    } else {
+      // Đăng nhập thất bại
+      return res.status(401).json(loginResult);
+    }
+  } catch (error) {
+    console.error('Login error', error);
+    return res.status(500).json({ success: false, code: 'SERVER_ERROR', message: "Server không phản hồi" });
+  }
+});
 
 
 
