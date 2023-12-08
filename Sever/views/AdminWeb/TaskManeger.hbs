@@ -1,0 +1,89 @@
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-gamepad"></i>
+                <p>The Game Zone</p>
+            </div>
+            <ul class="navbar">
+                <li><a href="/" class="active">HOME</a></li>
+                <li><a href="video.html">PREAMBLE</a></li>
+                <li><a href="#">SUPPORT</a></li>
+                <li><a href="/rank">RANK</a></li>
+                <li><a href="/login">LOGIN</a>/<a href="/register">REGISTER</a></li>
+            </ul>
+        </header>
+
+        <div class="tableRank">
+            <div class="tableWrapper">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>ID_User</th>
+                            <th>Tên</th>
+                            <th>Màn</th>
+                            <th>Điểm</th>
+                            <th>Coin</th>
+                            <th>Trạng Thái</th>
+                            <th>Tools</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each AllUser}}
+                        <tr>
+                            <td>{{this._id}}</td>
+                            <td>{{this.name}}</td>
+                            <td>{{this.man}}</td>
+                            <td>{{this.diem}}</td>
+                            <td>{{this.coin}}</td>
+                            <td>
+                                <select>
+                                    <option >Không ban</option>
+                                    <option >Đã ban</option>
+                                </select>
+                            </td>
+                            <td><button>Xóa</button>|<button>Sữa</button></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="logo-section">
+        <i class="fas fa-gamepad"></i>
+        <h1> The Game zone</h1>
+    </div>
+    <!-- lo go section ends here-->
+
+    <footer>
+        <div class="footer-body">
+            <div class="logo footer-logo">
+                <i class="fas fa-gamepad"></i>
+                <h1>TheGameZone</h1>
+            </div>
+            <ul>
+                <h3>Short Links</h3>
+                <li><a href="#">Arcade</a></li>
+                <li><a href="#">Arcade</a></li>
+                <li><a href="#">Arcade</a></li>
+                <li><a href="#">Arcade</a></li>
+            </ul>
+            <ul>
+                <h3>ACTION GAME</h3>
+                <li><a href="#">Arcade</a></li>
+                <li><a href="#">Arcade</a></li>
+                <li><a href="#">Arcade</a></li>
+                <li><a href="#">Arcade</a></li>
+            </ul>
+
+            <ul>
+                <h3>GET IN TOUCH</h3>
+                <li><a href="#">Arcade</a></li>
+                <li><a href="#">Arcade</a></li>
+                <li><a href="#">Arcade</a></li>
+                <li><a href="#">Arcade</a></li>
+            </ul>
+        </div>
+</body>

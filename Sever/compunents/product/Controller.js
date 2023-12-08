@@ -8,6 +8,17 @@ const getAllRank = async() =>{
     }
 }
 
+const getAllUser = async () => {
+    try {
+        return await productService.getAllUsers();
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+
 const deleteProductByID = async(id)=>{
     try {
         return await productService.deleteProductByID(id);
@@ -47,4 +58,4 @@ const getProductById = async (id) =>{
 const updateProductById = async (id,name,man, diem, coin) =>{
 
 }
-module.exports = {getAllRank,updateProductById,deleteProductByID,addProduct,getProductById,Savepoint};
+module.exports = {getAllRank,updateProductById,deleteProductByID,addProduct,getProductById,Savepoint,getAllUser};

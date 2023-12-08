@@ -10,6 +10,18 @@ const getAllRank = async () => {
   return [];
 }
 
+
+const getAllUsers = async () => {
+  try {
+    const users = await User.find(); // Lấy tất cả người dùng, không cần đối số
+    return users;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
+
 // xoa san pham theo id
 
 const deleteProductByID = async (id) => {
@@ -98,4 +110,4 @@ const updateProductById = async (id, name, man, diem, coin) => {
 
 
 
-module.exports = { getAllRank, addProduct, getProductById, updateProductById, Savepoint};
+module.exports = { getAllRank, addProduct, getProductById, updateProductById, Savepoint,getAllUsers,deleteProductByID};

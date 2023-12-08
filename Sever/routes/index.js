@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+
 const userController = require('../compunents/user/Controller');
 const productController = require('../compunents/product/Controller');
 const { checkRegister } = require('../compunents/midle/Validation');
@@ -43,6 +44,7 @@ router.post('/fogetpassword/:id', async (req, res, next) => {
       const result = await userController.changePassword(id, password, newpass);
       if (result === 1) {
         return res.redirect('/login');
+
       } else if (result === 2) {
         return res.redirect('/fogetpassword/' + id);
       } else {
@@ -79,6 +81,19 @@ router.get('/rank', async (req, res, next) => {
 router.get('/login', function (req, res, next) {
   res.render('user/login');
 });
+
+router.get('/webAdmin', async (req, res, next) => {
+  try {
+    const AllUser = await productController.getAllUser();
+    console.log(AllUser);
+    res.render('AdminWeb/TaskManeger', { AllUser });
+  } catch (error) {
+    console.error(error);
+    // Xử lý lỗi nếu có
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 
 
 // http://localhost:3000/login
@@ -203,7 +218,7 @@ router.post('/register', async (req, res, next) => {
     } else {
       // Log thông báo lỗi
       console.error('Error during registration:', result.message);
-      return res.render('user/register', {message: result.message});
+      return res.render('user/register', { message: result.message });
 
       // Thêm thông báo lỗi vào URL hoặc chuyển đến trang đăng ký với thông báo
       // return res.redirect(`/register?error=${result.message}`);
@@ -321,43 +336,61 @@ function Ngaunhien() {
 
 
 
-router.post("/resetPassword", async (req, res, next) => {
+// router.post("/resetPassword", async (req, res, next) => {
 
+//   try {
+//     const { email, password, otp } = req.body;
+//     const resetPassword = await userController.resetPassword(email, password, otp);
+//     if (resetPassword) {
+//       return res.render('user/login');
+//     }
+//     console.log(">>>>>>>>", resetPassword);
+//     return res.status(200).json({ status: false, message: "otp khong dung" });
+
+//   } catch (error) {
+//     console.log("failed to reset password", error);
+//     return res.status(500).json({ status: false, message: "Sever không phản hồi" });
+//   }
+
+// });
+
+
+
+// router.post("/resetPassword", async (req, res, next) => {
+
+//   try {
+//     const { email, password, otp } = req.body;
+//     const resetPassword = await userController.resetPassword(email, password, otp);
+//     if (resetPassword) {
+//       return res.render('user/login');
+//     }
+//     console.log(">>>>>>>>", resetPassword);
+//     return res.status(200).json({ status: false, message: "otp khong dung" });
+
+//   } catch (error) {
+//     console.log("failed to reset password", error);
+//     return res.status(500).json({ status: false, message: "Sever không phản hồi" });
+//   }
+
+// });
+
+router.post("/resetPassword", async (req, res, next) => {
   try {
     const { email, password, otp } = req.body;
-    const resetPassword = await userController.resetPassword(email, password, otp);
-    if (resetPassword) {
-      return res.render('user/login');
-    }
-    console.log(">>>>>>>>", resetPassword);
-    return res.status(200).json({ status: false, message: "otp khong dung" });
+    const isResetSuccessful = await userController.resetPassword(email, password, otp);
 
+    if (isResetSuccessful) {
+      // Nếu reset mật khẩu thành công, chuyển hướng đến trang đăng nhập
+      return res.redirect('/login');
+    } console.log(isResetSuccessful);
+
+    return res.status(400).json({ status: false, message: "Mã OTP không đúng" });
   } catch (error) {
-    console.log("failed to reset password", error);
+    console.log("Failed to reset password", error);
     return res.status(500).json({ status: false, message: "Sever không phản hồi" });
   }
-
 });
 
-
-
-router.post("/resetPassword", async (req, res, next) => {
-
-  try {
-    const { email, password, otp } = req.body;
-    const resetPassword = await userController.resetPassword(email, password, otp);
-    if (resetPassword) {
-      return res.render('user/login');
-    }
-    console.log(">>>>>>>>", resetPassword);
-    return res.status(200).json({ status: false, message: "otp khong dung" });
-
-  } catch (error) {
-    console.log("failed to reset password", error);
-    return res.status(500).json({ status: false, message: "Sever không phản hồi" });
-  }
-
-});
 
 
 
