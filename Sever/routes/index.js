@@ -7,6 +7,7 @@ const { checkRegister } = require('../compunents/midle/Validation');
 const { checkTokenWeb } = require('../compunents/midle/Authen');
 
 
+
 // http://localhost:3000/
 router.get('/', function (req, res, next) {
   res.render('index'); // render dung cho hien thi mot tran nao do

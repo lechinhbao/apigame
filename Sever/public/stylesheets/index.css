@@ -173,29 +173,33 @@ section-1 h1{
 .section-1-img .img{
     width: 100px;
     height: 130px;
-    background: url(../images/b3.jpg);
     background-size: cover;
     background-position: center;
     margin-right: 10px;
     border-radius: 10px;
 }
+.section-1-img .img-2{
+    background: url(../images/Player5.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
 .section-1-img .img-3{
-    background: url(../images/b3.jpg);
+    background: url(../images/Player2.jpg);
     background-size: cover;
     background-position: center;
 }
 .section-1-img .img-4{
-    background: url(../images/b3.jpg);
+    background: url(../images/Player3.jpg);
     background-size: cover;
     background-position: center;
 }
 .section-1-img .img-5{
-    background: url(../images/b3.jpg);
+    background: url(../images/Player4.jpg);
     background-size: cover;
     background-position: center;
-}
-.section-1-img .img-6{
-    background: url(../images/b3.jpg);
+}.section-1-img .img-1{
+    background: url(../images/Player1.jpg);
     background-size: cover;
     background-position: center;
 }
@@ -240,50 +244,28 @@ section-1 h1{
 
 
 .gw-1{
-    background: url(../images/b2.jpg);
+    background: url(../images/Pet1.jpg);
     background-size: cover;
     background-position: center;
 }
 .gw-2{
-    background: url(../images/b2.jpg);
+    background: url(../images/Pet2.jpg);
     background-size: cover;
     background-position: center;
 }
 .gw-3{
-    background: url(../images/b2.jpg);
+    background: url(../images/Pet3.jpg);
     background-size: cover;
     background-position: center;
 }
 .gw-4{
-    background: url(../images/b2.jpg);
+    background: url(../images/Pet4.jpg);
     background-size: cover;
     background-position: center;
 }
-.gw-5{
-    background: url(../images/b2.jpg);
-    background-size: cover;
-    background-position: center;
-}
-.gw-6{
-    background: url(../images/b2.jpg);
-    background-size: cover;
-    background-position: center;
-}
-.gw-7{
-    background: url(../images/b2.jpg);
-    background-size: cover;
-    background-position: center;
-}
-.gw-8{
-    background: url(../images/b2.jpg);
-    background-size: cover;
-    background-position: center;
-}
-.gw-9{
-    background: url(../images/b2.jpg);
-    background-size: cover;
-    background-position: center;
-}
+
+
+
 
 /*  section 1.1 end here*/
 .section-2{

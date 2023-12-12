@@ -31,13 +31,24 @@ app.use(session({
   cookie: { secure: false }
 }))
 
-mongoose.connect("mongodb+srv://lechinhbao3477:03040509@knightsadventure.wjl5tfn.mongodb.net/?retryWrites=true&w=majority", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-  .then(() => console.log('>>>>>>>>>> DB Connected!!!!!!'))
-  .catch(err => console.log('>>>>>>>>> DB Error: ', err));
 
+
+
+// mongoose.connect("mongodb+srv://lechinhbao3477:03040509@knightsadventure.wjl5tfn.mongodb.net/?retryWrites=true&w=majority", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// })
+//   .then(() => console.log('>>>>>>>>>> DB Connected!!!!!!'))
+//   .catch(err => console.log('>>>>>>>>> DB Error: ', err));
+
+
+  mongoose.connect(process.env.MONGODB_URI || "mongodb+srv://lechinhbao3477:03040509@knightsadventure.wjl5tfn.mongodb.net/?retryWrites=true&w=majority", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => console.log('DB Connected!!!!!!'))
+  .catch(err => console.error('DB Connection Error:', err));
+  
 
 // http://localhost:3000/
 app.use('/', indexRouter);
@@ -65,5 +76,7 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
 
 module.exports = app;
