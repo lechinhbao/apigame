@@ -50,6 +50,8 @@ app.use(session({
   .catch(err => console.error('DB Connection Error:', err));
   
 
+  
+
 // http://localhost:3000/
 app.use('/', indexRouter);
 // http://localhost:3000/api/user
