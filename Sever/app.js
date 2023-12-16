@@ -38,17 +38,14 @@ mongoose.connect("mongodb+srv://lechinhbao3477:12092003@knight-astuventd.ajw8nms
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-  .then(() => {
-    console.log('>>>>>>>>>> DB Connected!!!!!!');
-    const port = process.env.PORT || 5000;
-    app.listen(port, () => {
-      console.log(`Server is running on port ${port}`);
-    });
-  })
-  .catch((err) => {
-    console.error('>>>>>>>>> DB Connection Error: ', err);
-    // Handle the error, you might want to stop the server or do something appropriate.
-  });
+  .then(() => console.log('>>>>>>>>>> DB Connected!!!!!!'))
+  .catch(err => console.log('>>>>>>>>> DB Error: ', err));
+
+
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
 
 
 
