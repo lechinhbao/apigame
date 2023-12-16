@@ -34,7 +34,7 @@ app.use(session({
 
 
 
-mongoose.connect("mongodb+srv://lechinhbao3477:03040509@knightsadventure.wjl5tfn.mongodb.net/?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://lechinhbao3477:12092003@knight-astuventd.ajw8nms.mongodb.net/?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
@@ -42,7 +42,11 @@ mongoose.connect("mongodb+srv://lechinhbao3477:03040509@knightsadventure.wjl5tfn
   .catch(err => console.log('>>>>>>>>> DB Error: ', err));
 
 
-  
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+
 
 
 
@@ -71,11 +75,6 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-});
-
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
 });
 
 module.exports = app;

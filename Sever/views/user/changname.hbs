@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đổi tên</title>
+</head>
+
+<body>
+    <div class="box">
+        <form class="containerr" action="/addnew" method="post">
+            <h2>Đổi tên</h2>
+            <label for="playerId">ID Người chơi:</label>
+            <input type="text" id="id" name="id" required>
+            <label for="name">Tên người chơi đổi:</label>
+            <input type="text" id="name" name="name" required>
+
+            <div>
+                <!-- Hiển thị thông báo lỗi nếu có -->
+                {{#if errorMessage}}
+                <p>{{errorMessage}}</p>
+                {{/if}}
+
+                <!-- Hiển thị thông báo thành công nếu có -->
+                {{#if successMessage}}
+                <p>{{successMessage}}</p>
+                {{/if}}
+            </div>
+            <br>
+            <input type="submit" value="Đổi tên">
+        </form>
+    </div>
+</body>
+
+</html>

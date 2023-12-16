@@ -7,9 +7,7 @@
             </div>
             <ul class="navbar">
                 <li><a href="/" class="active">HOME</a></li>
-                <li><a href="video.html">PREAMBLE</a></li>
-                <li><a href="#">SUPPORT</a></li>
-                <li><a href="/rank">RANK</a></li>
+                <li><a href="/new">ADD</a></li>
                 <li><a href="/login">LOGIN</a>/<a href="/register">REGISTER</a></li>
             </ul>
         </header>
@@ -24,7 +22,6 @@
                             <th>Màn</th>
                             <th>Điểm</th>
                             <th>Coin</th>
-                            <th class="button-key">Trạng Thái</th>
                             <th>Tools</th>
                         </tr>
                     </thead>
@@ -36,8 +33,7 @@
                             <td>{{this.man}}</td>
                             <td>{{this.diem}}</td>
                             <td>{{this.coin}}</td>
-                            <td id="statusCell">Hoạt động</td>
-                            <td><button>Xóa</button>|<button onclick="toggleStatus({{this._id}})">Khóa</button></td>
+                            <td><a onclick="confirmDelete('{{this._id}}')">Xóa</a></td>
                         </tr>
                         {{/each}}
                     </tbody>
@@ -81,19 +77,57 @@
                 <li><a href="#">Arcade</a></li>
             </ul>
         </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
         <script>
-            var statusValue = 0; // Biến trạng thái (0 hoặc 1)
-            function toggleStatus() {
-                // Lấy phần tử td theo id
-                var statusCell = document.getElementById('statusCell');
-                // Kiểm tra giá trị trạng thái và thay đổi nó
-                if (statusValue === 0) {
-                    statusCell.innerHTML = 'Hoạt động';
-                    statusValue = 1; // Chuyển đổi giá trị trạng thái
-                } else {
-                    statusCell.innerHTML = 'Không hoạt động';
-                    statusValue = 0; // Chuyển đổi giá trị trạng thái
+
+
+            const fetchAPI = async (url, Option) => {
+                const res = await fetch(url, Option);
+                return res.json();
+            }
+
+            const deleteUser = async (id) => {
+                const url = `/${id}/delete`;
+                const Option = {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+
+                try {
+                    const res = await fetchAPI(url, Option);
+                    if (res.result) {
+                        swal.fire("Thành công!", "xóa người chơi thành công:", "xóa");
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1000);
+                    } else {
+                        swal.fire("Thất bại!", "xóa người chơi thất bại:", "error");
+                    }
+                } catch (err) {
+                    console.log(err);
+                    swal.fire("Thất bại!", "xóa người chơi thất bại:", "error");
                 }
             }
+
+            const confirmDelete = (id) => {
+                swal.fire({
+                    title: "Xác nhận?",
+                    text: "Bạn có chắc chắn muốn xóa Người chơi này không?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        deleteUser(id);
+                    }
+                    // Ngược lại, không làm gì cả nếu người dùng không xác nhận xóa.
+                });
+            }
+
         </script>
 </body>

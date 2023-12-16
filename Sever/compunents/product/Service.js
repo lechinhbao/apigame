@@ -26,7 +26,7 @@ const getAllUsers = async () => {
 
 const deleteProductByID = async (id) => {
   try {
-    data = data.filter(item => item._id.toString() != id.toString());
+    await User.findByIdAndDelete(id)
     return true;
   } catch (error) {
     console.log(error);
@@ -34,24 +34,86 @@ const deleteProductByID = async (id) => {
   return false;
 }
 
-const addProduct = async (id, name, man, diem, coin,roll) => {
+
+
+const addProduct = async (id, name, man, diem, coin, roll) => {
   try {
     let newRank = await User.findById(id);
     console.log(">>>>>>>>>>>>", newRank);
+
     if (newRank) {
+      // Kiểm tra xem tên mới có trùng với tên hiện tại không
+      if (name && name !== newRank.name) {
+        const existingUser = await User.findOne({ name });
+        if (existingUser) {
+          console.log('Tên đã tồn tại');
+          return false; // Trả về false nếu tên đã tồn tại
+        }
+      }
+
+      // Cập nhật thông tin nếu không có vấn đề với tên
       newRank.name = name ? name : newRank.name;
       newRank.man = man ? man : newRank.man;
       newRank.diem = diem ? diem : newRank.diem;
       newRank.coin = coin ? coin : newRank.coin;
       newRank.roll = roll ? roll : newRank.roll;
+
+      // Kiểm tra xem có thay đổi không trước khi save
+      if (newRank.isModified()) {
+        await newRank.save();
+        return true; // Trả về true nếu thành công
+      } else {
+        console.log('Không có thay đổi để lưu.');
+        return false;
+      }
+    } else {
+      console.log('Bản ghi không tồn tại');
+      return false;
     }
-    await newRank.save();
+  } catch (error) {
+    console.log('Add product error:', error);
+    return false;
+  }
+};
+
+
+const addnewProduct = async (email, password, name, man, diem, coin, roll) => {
+  try {
+    const newProduct = new productUser({
+      email, password, name, man, diem, coin, roll
+    });
+    await newProduct.save();
     return true;
   } catch (error) {
     console.log('Add product error:', error);
     return false;
   }
 }
+
+
+
+const Changname = async (id, name) => {
+  try {
+    let newRank = await User.findById(id);
+    if (newRank) {
+      newRank.name = name ? name : newRank.name;
+      await newRank.save();
+      return true;
+    } else {
+      console.log('Bản ghi không tồn tại');
+      return false;
+    }
+  } catch (error) {
+    console.error('Lỗi khi cập nhật tên:', error);
+    return false;
+  }
+};
+
+
+
+
+
+
 
 const Savepoint = async (name, diem, coin) => {
   try {
@@ -111,4 +173,4 @@ const updateProductById = async (id, name, man, diem, coin) => {
 
 
 
-module.exports = { getAllRank, addProduct, getProductById, updateProductById, Savepoint,getAllUsers,deleteProductByID};
+module.exports = { getAllRank, addProduct, getProductById, updateProductById, Savepoint, getAllUsers, deleteProductByID, addnewProduct, Changname };

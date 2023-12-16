@@ -109,13 +109,13 @@ router.post('/login', async (req, res, next) => {
     if (result) {
       if (result.roll === 1) {
         return res.redirect('/webAdmin')
-      }else{
+      } else {
         const userId = result._id;
-      //const token = jwt.sign({id:1,name:'abc'},'secret',{expiresIn: 1 *60 *60});
-      // req.session.token = token;
-      return res.redirect('/informationuser/' + userId);
+        //const token = jwt.sign({id:1,name:'abc'},'secret',{expiresIn: 1 *60 *60});
+        // req.session.token = token;
+        return res.redirect('/informationuser/' + userId);
       }
-      
+
     }
     return res.redirect('/login');
 
@@ -220,7 +220,7 @@ router.post('/register', async (req, res, next) => {
       const subject = "Chúc mừng bạn đã đăng kí thành công";
       const content = `<h1>xin chao ban ${name}toi game sinh ton </h1>`;
       const result = await userController.sendMail(to, subject, content);
-      return res.redirect('/login');
+
     } else {
       // Log thông báo lỗi
       console.error('Error during registration:', result.message);
@@ -240,16 +240,44 @@ router.post('/register', async (req, res, next) => {
 
 router.post('/addnew', async (req, res, next) => {
   try {
-    const { id, name, man, diem, coin,roll } = req.body;
-    const addnew = await productController.addProduct(id, name, man, diem, coin,roll);
+    const { id, name, man, diem, coin, roll } = req.body;
+    const addnew = await productController.addProduct(id, name, man, diem, coin, roll);
     if (addnew) {
-      return res.status(200).json({ addnew: true });
+      return res.redirect('/login');
     }
-    return res.status(400).json({ addnew: false })
+    res.render('user/changname', { successMessage: 'Đổi tên thất bại.' });
   } catch (error) {
     return res.status(500).json({ addnew: false });
   }
 });
+
+
+
+
+router.post('/changname/:id', async (req, res, next) => {
+  try {
+    const { id, name } = req.body;
+    const addnewResult = await productController.addProduct(id, name);
+    if (!addnewResult.success) {
+      // Nếu không thành công (tên đã tồn tại), hiển thị thông báo lỗi
+      return res.render('user/changname', { errorMessage: addnewResult.message });
+    }
+    // Nếu thành công, chuyển hướng đến trang đăng nhập
+    return res.redirect('/login');
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ addnew: false });
+  }
+});
+
+router.get('/changname', async (req, res, next) => {
+  const { id } = req.params;
+  res.render('user/changname');
+
+});
+
+
+
 
 
 router.post('/savepoint', async (req, res, next) => {
@@ -395,8 +423,10 @@ router.post("/resetPassword", async (req, res, next) => {
 
 
 
+
+
 router.get("/loginAdmin", async (req, res, next) => {
-  res.render('AdminWeb/loginAdmin');  
+  res.render('AdminWeb/loginAdmin');
 });
 
 
@@ -427,6 +457,46 @@ router.post("/loginAdmin", async (req, res, next) => {
   }
 });
 
+
+
+router.get('/new', async (req, res, next) => {
+  try {
+    //const addUser = await productController.newProduct( email,password,name, man, diem, coin,roll);
+    return res.render('product/new');
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/addnewUser', async (req, res, next) => {
+  try {
+    const { email, password, name, man, diem, coin, roll } = req.body;
+
+    const addnewResult = await productController.newProduct(email, password, name, man, diem, coin, roll);
+    if (addnewResult) {
+      // Thành công, chuyển hướng đến trang login hoặc hiển thị thông báo thành công
+      return res.redirect('/login');
+    }
+
+    // Thất bại, hiển thị thông báo lỗi hoặc chuyển hướng đến trang thất bại
+    return res.render('trang-that-bai', { errorMessage: 'Thêm mới người chơi thất bại.' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ addnew: false });
+  }
+});
+
+
+
+router.get('/:id/delete', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await productController.deleteProductByID(id);
+    return res.json({ result });
+  } catch (error) {
+    return res.json({ result: false });
+  }
+});
 
 
 module.exports = router;
