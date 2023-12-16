@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "postinstall": "npm rebuild bcrypt --build-from-source",
     "dev": "nodemon ./bin/www",
     "start": "node ./bin/www"
   },
