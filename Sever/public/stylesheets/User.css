@@ -7,7 +7,6 @@
 body {
   
     font-family: 'Poppins', sans-serif;
-    color: #fff;
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -26,7 +25,7 @@ body {
 }
 
 header {
-    width: 100%;
+    width: 102%;
     height: 10vh;
     background: rgba(6, 6, 6, 0.5);
     display: flex;
@@ -38,7 +37,6 @@ header {
 
 h1 {
     text-align: center;
-    margin-top: 70px;
     font-family: 'YourGameFont', sans-serif;
     font-size: 31px;
     color: #fec53a;
@@ -116,7 +114,7 @@ thead {
 
 /* Chỉnh sửa cho footer */
 footer {
-    width: 100%;
+    width: 102%;
     background: #282828;
     padding: 20px 0;
 }

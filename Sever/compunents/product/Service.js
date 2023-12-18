@@ -1,9 +1,9 @@
 const { User } = require('../Model');
-
+const bcrypt = require('bcrypt');
 
 const getAllRank = async () => {
   try {
-    return await User.find().populate("id").sort({ "diem": -1 });
+    return await User.find().populate("id").sort({ "diem": -1 }).limit(5);
   } catch (error) {
     console.log(error);
   }
@@ -79,16 +79,38 @@ const addProduct = async (id, name, man, diem, coin, roll) => {
 
 const addnewProduct = async (email, password, name, man, diem, coin, roll) => {
   try {
-    const newProduct = new productUser({
-      email, password, name, man, diem, coin, roll
+    // Kiểm tra mật khẩu
+    if (password.length < 8 || !/\d/.test(password) || !/[a-zA-Z]/.test(password)) {
+      console.log('Mật khẩu không đáp ứng yêu cầu.');
+      return { success: false, message: 'Mật khẩu phải có ít nhất 8 ký tự và chứa ít nhất một chữ và một số.' };
+    }
+
+    // Kiểm tra trùng lặp email hoặc name trong cơ sở dữ liệu
+    const existingUser = await User.findOne({ $or: [{ email }, { name }] });
+
+    if (existingUser) {
+      // Nếu tồn tại người dùng với email hoặc name trùng
+      console.log('Email hoặc Name đã tồn tại trong hệ thống.');
+      return { success: false, message: 'Email hoặc Name đã tồn tại trong hệ thống.' };
+    }
+
+    // Hash mật khẩu trước khi lưu vào cơ sở dữ liệu
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Nếu không có trùng lặp và mật khẩu đáp ứng yêu cầu, thêm mới người dùng
+    const newUser = new User({
+      email, password: hashedPassword, name, man, diem, coin, roll
     });
-    await newProduct.save();
-    return true;
+
+    await newUser.save();
+    return { success: true, message: 'Thêm mới người chơi thành công.' };
   } catch (error) {
     console.log('Add product error:', error);
-    return false;
+    return { success: false, message: 'Đã xảy ra lỗi khi thêm mới người chơi.' };
   }
 }
+
+
 
 
 
@@ -147,30 +169,9 @@ const getProductById = async (id) => {
   return false;
 }
 
-const updateProductById = async (id, name, man, diem, coin) => {
-
-  try {
-    const product = data.find(item => item._id.toString() == id.toString());
-    if (product) {
-      data = data.map(item => {
-        if (item._id.toString() == id.ToString()) {
-          item.name = name ? name : item.name;
-          item.man = man ? man : item.man;
-          item.diem = diem ? diem : item.diem;
-          item.coin = coin ? coin : item.coin;
-        }
-        return item;
-      });
-      return true;
-    }
-  } catch (error) {
-    console.log(' update product by id error', e);
-  }
-  return false;
-
-}
 
 
 
 
-module.exports = { getAllRank, addProduct, getProductById, updateProductById, Savepoint, getAllUsers, deleteProductByID, addnewProduct, Changname };
+
+module.exports = { getAllRank, addProduct, getProductById, Savepoint, getAllUsers, deleteProductByID, addnewProduct, Changname };

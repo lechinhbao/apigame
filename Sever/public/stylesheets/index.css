@@ -116,7 +116,7 @@ ul.navbar li a:hover:not(.active){
 }
 .rakuto::after{
     content: '';
-    width: 400px;
+    width: 600px;
     height: 400px;
     background: url(../images/characters.png);
     background-size: cover;

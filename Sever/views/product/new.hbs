@@ -6,11 +6,9 @@
                 <p>The Game Zone</p>
             </div>
             <ul class="navbar">
-                <li><a href="/" class="active">HOME</a></li>
-                <li><a href="video.html">PREAMBLE</a></li>
-                <li><a href="#">SUPPORT</a></li>
-                <li><a href="/rank">RANK</a></li>
-                <li><a href="/login">LOGIN</a>/<a href="/register">REGISTER</a></li>
+                <li><a href="/webAdmin" class="active">Home</a></li>
+                <li><a href="/new">Add</a></li>
+                <li><a href="/login">Login</a>/<a href="/register">Register</a></li>
             </ul>
         </header>
         <br>
@@ -22,7 +20,7 @@
             <div class="top-header">
                 <h2>ADD NEW </h2>
             </div>
-            <form class="user" method="post" action="/new">
+            <form class="user" method="post" action="/addnewUser">
                 <div class="input-field">
                     <input type="email" class="input" placeholder="Email" name="email" required>
                     <i class="bx bx-user"></i>
@@ -57,6 +55,17 @@
                     <i class="bx bx-lock-alt"></i>
                 </div>
                 <br>
+                <div>
+                    <!-- Hiển thị thông báo lỗi nếu có -->
+                    {{#if errorMessage}}
+                    <p>{{errorMessage}}</p>
+                    {{/if}}
+
+                    <!-- Hiển thị thông báo thành công nếu có -->
+                    {{#if successMessage}}
+                    <p>{{successMessage}}</p>
+                    {{/if}}
+                </div>
 
                 <button type="submit">
                     Thêm mới
@@ -66,6 +75,7 @@
 
 
         </div>
+
 
         <br>
         <br>

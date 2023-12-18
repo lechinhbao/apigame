@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+const jwt = express.Router();
 const userController = require('../compunents/user/Controller');
 const productController = require('../compunents/product/Controller');
 const { checkRegister } = require('../compunents/midle/Validation');
@@ -101,37 +101,49 @@ router.get('/webAdmin', async (req, res, next) => {
 // hien thi tran login
 // nei login thanh cong thi chuyen sang tran chu 
 // con khong dc thi chuyen lai trang login
+
 router.post('/login', async (req, res, next) => {
   try {
-
     const { email, password } = req.body;
+    // Kiểm tra mật khẩu
+    if (password.length < 8 || !/\d/.test(password) || !/[a-zA-Z]/.test(password)) {
+      return res.redirect('/login');
+    }
     const result = await userController.login(email, password);
+
     if (result) {
+      // // Tạo JWT token
+      // const token = jwt.sign({ id:1, name: 'abc' }, '', { expiresIn: '1h' });
+      // // Thiết lập session và token
+      // req.session.userId = result._id;
+      // req.session.token = token;
+
       if (result.roll === 1) {
-        return res.redirect('/webAdmin')
+        return res.redirect('/webAdmin');
       } else {
         const userId = result._id;
-        //const token = jwt.sign({id:1,name:'abc'},'secret',{expiresIn: 1 *60 *60});
-        // req.session.token = token;
         return res.redirect('/informationuser/' + userId);
       }
-
     }
-    return res.redirect('/login');
 
+    return res.redirect('/login');
   } catch (error) {
     next(error);
     return res.status(500).json({ result: false });
-
   }
 });
+
+
+
 
 router.post('/loginUser', async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const result = await userController.login(email, password);
+
     if (result) {
-      let Usser = {
+      // Đăng nhập thành công
+      let user = {
         status: 1,
         Notification: "Login thành công",
         name: result.name,
@@ -139,13 +151,19 @@ router.post('/loginUser', async (req, res, next) => {
         diem: result.diem,
         man: result.man,
       };
-      return res.status(200).json(Usser)
+      return res.status(200).json(user);
+    } else {
+      // Đăng nhập không thành công
+      let user = {
+        status: 0,
+        Notification: "Login không thành công",
+      };
+      return res.status(200).json(user);
     }
 
   } catch (error) {
     next(error);
     return res.status(500).json({ result: false });
-
   }
 });
 
@@ -197,7 +215,7 @@ router.get('/informationuser/:id', async (req, res, next) => {
 
 
 
-router.get('/logout', [checkTokenWeb], async (req, res, next) => {
+router.get('/logout', async (req, res, next) => {
 
   try {
     res.session.destroy();
@@ -217,10 +235,79 @@ router.post('/register', async (req, res, next) => {
 
     if (result.success) {
       const to = email;
-      const subject = "Chúc mừng bạn đã đăng kí thành công";
-      const content = `<h1>xin chao ban ${name}toi game sinh ton </h1>`;
-      const result = await userController.sendMail(to, subject, content);
+      const subject = "🎉 Chúc Mừng! Bạn Đã Đăng Kí Thành Công! 🚀";
+      const content = ` 
+      
+      <html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Knights-Adventure</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #1f1f1f;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
 
+    h1 {
+      font-family: 'fantasy'; /* Chọn font chữ hướng về game */
+      text-align: center;
+      font-size: 2em;
+    }
+
+    p, ul {
+      font-size: 1.2em;
+      line-height: 1.5;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li::before {
+      content: '🔹'; /* Thêm biểu tượng trước mỗi mục danh sách */
+      margin-right: 5px;
+    }
+
+    p:last-child {
+      margin-bottom: 30px;
+    }
+
+    footer {
+      font-size: 0.8em;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Xin chào 🎮🎮🎮 ${name}!</h1>
+  
+  <p>Cảm ơn bạn đã tham gia vào cuộc phiêu lưu tuyệt vời của chúng tôi trong thế giới game sinh tồn!</p>
+  
+  <p>Chuẩn bị cho một hành trình kỳ thú, nơi bạn sẽ đối mặt với những thách thức, đầy rẫy quái vật, và chiến đấu cho đến cuối cùng mang hòa bình về cho mọi người.</p>
+  
+  <ul>
+    <li><strong>Tên người chơi:</strong> ${name}</li>
+    <li><strong>Email:</strong> ${email}</li>
+  </ul>
+  
+  <p>Chúc bạn có những giây phút thú vị và thành công trong hành trình của mình!</p>
+  
+  <footer>Trân trọng,<br />Đội ngũ Knights-Adventure</footer>
+
+</body>
+</html>
+`
+
+        ;
+      const result = await userController.sendMail(to, subject, content);
+      return res.render('user/login', { message: result.message });
     } else {
       // Log thông báo lỗi
       console.error('Error during registration:', result.message);
@@ -302,7 +389,7 @@ router.post('/sendmail', async (req, res, next) => {
     let name = 'nguyen van a'
     const content = `
     <h1> Chuc mung ban dang ki thanh cong ${name} </h1>
-    <h2>Chuc mung den voi advandtuknghit</h2>
+    <h2> Chuc mung den voi advandtuknghit</h2>
     `;
     const result = await userController.sendMail(to, subject, content);
     return res.status(200).json({ result });
@@ -317,44 +404,142 @@ router.post('/sendmail', async (req, res, next) => {
 
 router.post('/senotpmail', async (req, res, next) => {
   try {
-    const { email } = req.body;
-    const sendmail = await userController.sendotp(email);
-    if (sendmail) {
-      const to = sendmail.email;
-      console.log(to);
-      const id = sendmail._id;
+    const { email, password } = req.body;
+    
+    // Kiểm tra email và password
+    const user = await userController.sendotp(email, password);
+
+    if (user) {
+      // Nếu thông tin đăng nhập đúng
+      const to = user.email;
+      const id = user._id;
       const otp = Ngaunhien();
-      const subject = "Xac nhan tai khoan";
-      const content = `<div style="font-family: Helvetica,Arial,sans-serif;min-width:1000px;overflow:auto;line-height:2">
-    <div style="margin:50px auto;width:70%;padding:20px 0">
-      <div style="border-bottom:1px solid #eee">
-        <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Your Brand</a>
-      </div>
-      <p style="font-size:1.1em">Hi,</p>
-      <p>Thank you for choosing Your Brand. Use the following OTP to complete your Sign Up procedures. OTP is valid for 5 minutes</p>
-      <h2 style="background: #00466a;margin: 0 auto;width: max-content;padding: 0 10px;color: #fff;border-radius: 4px;">${otp}</h2>
-      <p style="font-size:0.9em;">Regards,<br />Your Brand</p>
-      <hr style="border:none;border-top:1px solid #eee" />
-      <div style="float:right;padding:8px 0;color:#aaa;font-size:0.8em;line-height:1;font-weight:300">
-        <p>Your Brand Inc</p>
-        <p>1600 Amphitheatre Parkway</p>
-        <p>California</p>
-      </div>
+      const subject = "🎉 Gởi Mã Xác Nhận Thành công! 🚀";
+      const content = `
+      <html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Knights-Adventure Registration</title>
+  <style>
+    body {
+      font-family: 'Helvetica', Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      margin: 50px auto;
+      width: 70%;
+      padding: 20px 0;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    header {
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+
+    header a {
+      font-size: 1.4em;
+      color: #00466a;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: 1.1em;
+      color: #00466a;
+    }
+
+    h2 {
+      background: #00466a;
+      margin: 0 auto;
+      width: max-content;
+      padding: 0 10px;
+      color: #fff;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+
+    .news {
+      font-size: 0.9em;
+      color: #00466a;
+    }
+
+    .news-highlight {
+      font-size: 1.1em;
+      font-weight: bold;
+      color: #00466a;
+    }
+
+    .footer {
+      float: right;
+      padding: 8px 0;
+      color: #aaa;
+      font-size: 0.8em;
+      line-height: 1;
+      font-weight: 300;
+    }
+
+    /* Sử dụng font chữ hướng game cho emoji */
+    @font-face {
+      font-family: 'game-font';
+      src: url('path_to_your_game_font.ttf') format('truetype');
+    }
+
+    header a::before,
+    .news-highlight::before,
+    .news::before,
+    .footer p::before {
+      content: '🎮';
+      font-family: 'game-font';
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <a href="" style="font-size: 1.4em; color: #00466a; text-decoration: none; font-weight: 600;"></a>
+    </header>
+    <h1>Hi,</h1>
+    <p>Thank you for choosing 🎮 Knights-Adventure. Use the following OTP to complete your Sign Up procedures. OTP is valid for 5 minutes.</p>
+    <h2>${otp}</h2>
+    <p class="news">Also, we're excited to share some news from the gaming world:</p>
+    <p class="news-highlight">
+      Adventures with warriors in each place bring a new sense of difficulty with powerful moves that motivate monsters.
+    </p>
+    <p class="news">Immerse yourself in the world of gaming with our latest release. Exciting adventures await you!</p>
+    <p class="news">Stay tuned for more updates and exclusive offers.</p>
+    <p class="news">Regards,<br />🎮 Knights-Adventure</p>
+    <hr style="border:none;border-top:1px solid #eee" />
+    <div class="footer">
+      <p>🎮 Knights-Adventure</p>
+      <p>Quận 12 Quang Trung</p>
+      <p>Việt Nam</p>
     </div>
-  </div>`;
+  </div>
+
+</body>
+</html>
+      `;
       const addotp = await userController.addotp(id, otp);
       const result = await userController.sendMail(to, subject, content);
+      
       return res.render('user/ResetPasswordOTP');
-      // cần sữa lại thành chỗ của nhập mã otp và mật khẩu mới 
-    }
-    else {
-      return res.status(400).json({ message: "tài khoản không tồn tại" });
+    } else {
+      // Nếu thông tin đăng nhập không đúng
+      return res.status(400).json({ message: "Sai email hoặc mật khẩu. Mật khẩu phải có ít nhất 8 kí tự và chứa ít nhất một chữ cái và một số." });
     }
   } catch (error) {
-
-    console.log("fail to send mail", error);
+    console.log("Fail to send mail", error);
     return res.status(500).json({ status: false });
-
   }
 });
 
@@ -473,18 +658,20 @@ router.post('/addnewUser', async (req, res, next) => {
     const { email, password, name, man, diem, coin, roll } = req.body;
 
     const addnewResult = await productController.newProduct(email, password, name, man, diem, coin, roll);
-    if (addnewResult) {
-      // Thành công, chuyển hướng đến trang login hoặc hiển thị thông báo thành công
-      return res.redirect('/login');
-    }
 
-    // Thất bại, hiển thị thông báo lỗi hoặc chuyển hướng đến trang thất bại
-    return res.render('trang-that-bai', { errorMessage: 'Thêm mới người chơi thất bại.' });
+    if (addnewResult.success) {
+      // Thành công, hiển thị thông báo thành công
+      return res.render('product/new', { successMessage: addnewResult.message });
+    } else {
+      // Thất bại, hiển thị thông báo lỗi hoặc chuyển hướng đến trang thất bại
+      return res.render('product/new', { errorMessage: addnewResult.message });
+    }
   } catch (error) {
     console.error(error);
     return res.status(500).json({ addnew: false });
   }
 });
+
 
 
 

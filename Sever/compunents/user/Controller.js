@@ -73,7 +73,7 @@ const transporter = mailer.createTransport({
 const sendMail = async (to, subject, content) => {
     try {
         const mailOptions = {
-            from: 'bao <baolcps21320@fpt.edu.vn>',
+            from: 'Knights-Adventure <baolcps21320@fpt.edu.vn>',
             to,
             subject,
             html: content
