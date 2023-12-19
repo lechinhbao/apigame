@@ -1,10 +1,10 @@
-<body>
+{{!-- <body>
     <h2>Liên hệ Hỗ trợ</h2>
     <form action="/submit" method="post" id="supportForm">
         <!-- Trường input cho email -->
         <label for="email">Địa chỉ Email:</label>
         <input type="email" id="email" name="email" required><br> 
-        
+
         <label for="message">Nội dung:</label>
         <textarea id="message" name="message" rows="4" cols="50" required></textarea><br>
 
@@ -13,6 +13,114 @@
 
         <button type="submit">Gửi yêu cầu</button>
     </form>
+
+    <script>
+        // JavaScript để tự động điền email nếu có
+        document.addEventListener('DOMContentLoaded', function () {
+  const emailInput = document.getElementById('email');
+  const nameInput = document.getElementById('name');
+
+  // Kiểm tra xem trường input có sẵn giá trị không
+  if (emailInput.value.trim() === '') {
+    emailInput.readOnly = false; // Cho phép người dùng điền vào trường email
+  }
+
+  // Nếu bạn có sẵn giá trị mặc định cho email, bạn có thể kiểm tra và điền giá trị này vào trường email
+  // const userEmail = 'lechinhbao@gmail.com'; // Thay đổi thành email người dùng thực tế
+  // if (userEmail) {
+  //   emailInput.value = userEmail;
+  //   emailInput.readOnly = true; // Đặt trường email thành chỉ đọc nếu đã có email
+  // }
+});
+
+// ...
+
+// Nội dung email
+const mailOptions = {
+  from: email, // Sử dụng địa chỉ email của người gửi
+  to: 'baolcps21320@fpt.edu.vn',
+  subject: `Yêu cầu Hỗ trợ từ ${name} - ${email}`, // Thêm tên người gửi vào tiêu đề
+  text: `Nội dung: ${message}\nLiên hệ: ${contact}`,
+};
+    </script>
+</body> --}}
+
+
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-gamepad"></i>
+                <p> Knight's adventures</p>
+            </div>
+            <ul class="navbar">
+                <li><a href="/" class="active">HOME</a></li>
+                <li><a href="/submit">SUPPORT</a></li>
+                <li><a href="/rank">RANK</a></li>
+                <li><a href="/login">LOGIN</a>/<a href="/register">REGISTER</a></li>
+            </ul>
+        </header>
+
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <div class="containerr">
+            <h2>Liên hệ Hỗ trợ</h2>
+    <form action="/submit" method="post" id="supportForm">
+        <!-- Trường input cho email -->
+        <label for="email">Địa chỉ Email:</label>
+        <input type="email" id="email" name="email" required><br> 
+
+        <label for="message">Nội dung:</label>
+        <textarea id="message" name="message" rows="4" cols="50" required></textarea><br>
+
+        <label for="contact">Liên hệ:</label>
+        <input type="tel" id="contact" name="contact" required><br>
+
+        <button type="submit">Gửi yêu cầu</button>
+    </form>
+        </div>
+
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <!-- lo go section ends here-->
+
+        <footer>
+        <div class="footer-body">
+            <div class="logo footer-logo">
+                <i class="fas fa-gamepad"></i>
+                <h1>Knight's adventures</h1>
+            </div>
+            <ul>
+                <h3>Short Links</h3>
+                <li><a href="https://github.com/lechinhbao/apigame.git">Github</a></li>
+                <li><a href="/">HomeGame</a></li>
+                <li><a href="mailto:baolcps21320@fpt.edu.vn">Liên Hệ và Hổ Trợ</a></li>
+            </ul>
+            <ul>
+                <h3>Link FaceDEV</h3>
+                <li><a href="https://www.facebook.com/profile.php?id=100011394196700https://www.facebook.com/profile.php?id=100011394196700">Bảo</a></li>
+                <li><a href="https://www.facebook.com/NguyenThanhKhoii">Khôi</a></li>
+                <li><a href="https://www.facebook.com/camvien2406">Viên</a></li>
+                <li><a href="https://www.facebook.com/nhatnamnopro2003">Nhật</a></li>
+            </ul>
+
+            <ul>
+                <h3>Link Github</h3>
+                <li><a href="/"></i>Github: Bảo</a></li>
+                <li><a href="#"></i>Github: Khôi</a></li>
+                <li><a href="#"></i>Github: Viên</a></li>
+                <li><a href="#"></i>Github: Nhật</a></li>
+            </ul>
+        </div>
+    </footer>
+
 
     <script>
         // JavaScript để tự động điền email nếu có
