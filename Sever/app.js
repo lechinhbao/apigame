@@ -7,6 +7,7 @@ const session = require('express-session');
 const mongoose = require("mongoose");
 
 
+
 const indexRouter = require('./routes/index');
 // const userAPIRouter = require('./routes/api/user');
 // const productAPIRouter = require('./routes/api/product');
@@ -30,7 +31,8 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: false }
 }));
-
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 
 

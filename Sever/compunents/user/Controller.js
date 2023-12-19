@@ -86,5 +86,30 @@ const sendMail = async (to, subject, content) => {
     return false;
 }
 
+// const support = async (to, subject, content) => {
+//     try {
+//         // Kiểm tra xem email đã được đăng ký hay chưa
+//         const isEmailRegistered = await userService.isEmailRegistered(to);
+//         if (!isEmailRegistered) {
+//             console.log('Email chưa được đăng ký trong hệ thống.');
+//             return false;
+//         }
+//         // Gửi email nếu email đã được đăng ký
+//         const mailOptions = {
+//             from: 'Knights-Adventure <baolcps21320@fpt.edu.vn>',
+//             to: 'baolcps21320@fpt.edu.vn',
+//             subject,
+//             html: content
+//         }
+//         await transporter.sendMail(mailOptions);
+//         return true;
+//     } catch (error) {
+//         console.log('User controller sendMail error:', error);
+//         return false;
+//     }
+// }
+
+
+
 
 module.exports = { login, register, changePassword, sendMail,addotp,sendotp,resetPassword,loginAdmin};

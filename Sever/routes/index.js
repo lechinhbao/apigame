@@ -1,10 +1,62 @@
 var express = require('express');
 var router = express.Router();
-const jwt = express.Router();
 const userController = require('../compunents/user/Controller');
 const productController = require('../compunents/product/Controller');
 const { checkRegister } = require('../compunents/midle/Validation');
 const { checkTokenWeb } = require('../compunents/midle/Authen');
+
+
+const bodyParser = require('body-parser');
+const nodemailer = require('nodemailer');
+
+// Đường dẫn cho trang web
+router.get('/submit', (req, res,next) => {
+  res.render('user/support');
+});
+
+// Đường dẫn xử lý form POST
+router.post('/submit', (req, res) => {
+  const { email, message, contact } = req.body;
+
+  // Kiểm tra xem có dữ liệu hợp lệ từ yêu cầu không
+  if (!email || !message || !contact) {
+    return res.status(400).send('Dữ liệu không hợp lệ.');
+  }
+
+  // Thông tin tài khoản email của bạn
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'baolcps21320@fpt.edu.vn',
+      pass: 'e j g r g z r r h f e d f u a i',
+    },
+  });
+
+  // Nội dung email
+  const mailOptions = {
+    from: email, // Sử dụng địa chỉ email của người gửi
+    to: 'baolcps21320@fpt.edu.vn',
+    subject: `Yêu cầu Hỗ trợ từ ❗❗❗ ${email}`, // Đặt tên người gửi vào tiêu đề
+    text: `Nội dung: ${message}\nLiên hệ: ${contact}`,
+  };
+
+  // Gửi email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error(error);
+      return res.status(500).send('Đã có lỗi xảy ra, vui lòng thử lại sau.');
+    } else {
+      console.log('Email sent: ' + info.response);
+      return res.send('Yêu cầu của bạn đã được gửi thành công.');
+    }
+  });
+});
+
+
+
+
+
+
 
 
 
@@ -405,7 +457,7 @@ router.post('/sendmail', async (req, res, next) => {
 router.post('/senotpmail', async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    
+
     // Kiểm tra email và password
     const user = await userController.sendotp(email, password);
 
@@ -531,7 +583,7 @@ router.post('/senotpmail', async (req, res, next) => {
       `;
       const addotp = await userController.addotp(id, otp);
       const result = await userController.sendMail(to, subject, content);
-      
+
       return res.render('user/ResetPasswordOTP');
     } else {
       // Nếu thông tin đăng nhập không đúng

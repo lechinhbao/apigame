@@ -6,21 +6,6 @@
 const { User } = require('../Model');
 const bcrypt = require('bcrypt');
 
-// const login = async(email,password)=>{
-//     try{
-//         const user = await User.findOne({email});
-//        if(user){
-//          if( user.password == password){
-//             return user;
-//         }
-//        }
-//         return false;
-
-//     }catch(error){
-//         console.log('User service login error',error);
-//     }
-//     return false;
-// }
 
 const login = async (email, password) => {
   try {
@@ -109,26 +94,6 @@ const register = async (email, name, password, roll,key) => {
 
 
 
-
-
-// const changePassword = async (id, password, newpass) => {
-//   try {
-//     const user = await User.findById(id);
-//     if (user) {
-//       if (user.password == password) {
-//         user.password = newpass;
-//         await user.save();
-//         return 1;
-//       }
-//       return 2;
-//     }
-//     return 0;
-//   } catch (error) {
-//     console.log('User service changePassword error', error);
-//   }
-//   return 0;
-// }
-
 const changePassword = async (id, oldPassword, newPassword) => {
   try {
     const user = await User.findById(id);
@@ -182,23 +147,6 @@ const sendotp = async (email) => {
 };
 
 
-// const resetPassword = async (email, password, otp) => {
-//   try {
-//     const user = await User.findOne({ email });
-//     if (user) {
-//       if (user.otp == otp) {
-//         user.password = password ? password : user.password;
-//         await user.save();
-//         return true;
-//       }
-//       return false;
-//     }
-
-//   } catch (error) {
-//     console.log("user sendotp error", error);
-//   }
-//   return [];
-// };
 
 const resetPassword = async (email, newPassword, otp) => {
   try {
@@ -228,6 +176,18 @@ const resetPassword = async (email, newPassword, otp) => {
 };
 
 
+// Trong file userService.js
 
-module.exports = { login, register, changePassword, addotp, sendotp, resetPassword,loginAdmin };
+// const isEmailRegistered = async (email) => {
+//   try {
+//       const user = await User.findOne({ email });
+//       return !!user; // Trả về true nếu email đã được đăng ký, ngược lại là false
+//   } catch (error) {
+//       console.error('Error checking email registration:', error);
+//       return false;
+//   }
+// }
+
+module.exports = { login, register, changePassword, addotp, sendotp, resetPassword, loginAdmin };
+
 

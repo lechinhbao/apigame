@@ -244,26 +244,32 @@ section-1 h1{
 
 
 .gw-1{
-    background: url(../images/Pet1.jpg);
+    background: url(../images/qua.jpg);
     background-size: cover;
     background-position: center;
 }
 .gw-2{
-    background: url(../images/Pet2.jpg);
+    background: url(../images/chimung.jpg);
     background-size: cover;
     background-position: center;
 }
 .gw-3{
-    background: url(../images/Pet3.jpg);
+    background: url(../images/ma.jpg);
     background-size: cover;
     background-position: center;
 }
 .gw-4{
-    background: url(../images/Pet4.jpg);
+    background: url(../images/gioi.jpg);
     background-size: cover;
     background-position: center;
 }
 
+
+.gw-5{
+    background: url(../images/qua.jpg);
+    background-size: cover;
+    background-position: center;
+}
 
 
 
@@ -324,25 +330,21 @@ section-1 h1{
 }
 
 .p-image-1{
-    background: url(../images/nhat.jpg);
+    background: url(../images/khoi.jpg);
     background-size: cover;
     background-position: center;
 }
 .p-image-3{
-    background: url(../images/nhat.jpg);
+    background: url(../images/anhdev.jpg);
     background-size: cover;
     background-position: center;
 }
 .p-image-4{
-    background: url(../images/nhat.jpg);
+    background: url(../images/anhdev1.jpg);
     background-size: cover;
     background-position: center;
 }
-.p-image-5{
-    background: url(../images/nhat.jpg);
-    background-size: cover;
-    background-position: center;
-}
+
 
 /* section 3 start herej */
 .section-3{
