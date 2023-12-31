@@ -133,27 +133,27 @@ const Changname = async (id, name) => {
 
 
 
-
-
-
-
-const Savepoint = async (name, diem, coin) => {
+const Savepoint = async (name, diem, coin, X, Y, Z) => {
   try {
     let newRank = await User.findOne({ name });
-    console.log(">>>>>>>>>>>>", newRank);
+    console.log("Trước khi lưu >>>>>>>>>>", newRank);
     if (newRank) {
       newRank.name = name ? name : newRank.name;
       newRank.diem = diem ? diem : newRank.diem;
       newRank.coin = coin ? coin : newRank.coin;
-
+      newRank.X    = X    ? X    : newRank.X;
+      newRank.Y    = Y    ? Y    : newRank.Y;
+      newRank.Z    = Z    ? Z    : newRank.Z;
     }
     await newRank.save();
+    console.log("Sau khi lưu >>>>>>>>>>", newRank);
     return true;
   } catch (error) {
-    console.log('Add product error:', error);
+    console.log('Lỗi khi lưu:', error);
     return false;
   }
-}
+};
+
 
 const getProductById = async (id) => {
   try {

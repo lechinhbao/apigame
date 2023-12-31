@@ -10,7 +10,7 @@ const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 
 // Đường dẫn cho trang web
-router.get('/submit', (req, res,next) => {
+router.get('/submit', (req, res, next) => {
   res.render('user/support');
 });
 
@@ -202,6 +202,9 @@ router.post('/loginUser', async (req, res, next) => {
         coin: result.coin,
         diem: result.diem,
         man: result.man,
+        X: result.X,  // Thêm tọa độ X
+        Y: result.Y,  // Thêm tọa độ Y
+        Z: result.Z,   // Thêm tọa độ Z
       };
       return res.status(200).json(user);
     } else {
@@ -421,8 +424,8 @@ router.get('/changname', async (req, res, next) => {
 
 router.post('/savepoint', async (req, res, next) => {
   try {
-    const { name, diem, coin } = req.body;
-    const addnew = await productController.Savepoint(name, diem, coin);
+    const { name, diem, coin, X, Y, Z } = req.body;
+    const addnew = await productController.Savepoint(name, diem, coin, X, Y, Z);
     if (addnew) {
       return res.status(200).json({
         status: 1,

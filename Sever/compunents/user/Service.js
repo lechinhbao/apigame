@@ -82,7 +82,7 @@ const register = async (email, name, password, roll,key) => {
     // Thêm các kiểm tra khác nếu cần thiết cho tên người dùng
 
     // Gán giá trị roll theo mong muốn (ví dụ, 0)
-    const newUser = new User({ email, name, password: hash, roll: roll || 0 ,key: key || 0});
+    const newUser = new User({ email, name, password: hash, roll: roll || 0, key: key });
     await newUser.save();
     console.log('Đăng ký thành công:', email);
     return { success: true, code: 'REGISTER_SUCCESS', message: 'Đăng ký thành công' };

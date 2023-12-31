@@ -62,9 +62,9 @@ const addnewProduct = async (name, man, diem, coin, roll) => {
 }
 
 
-const Savepoint = async (name, diem, coin) => {
+const Savepoint = async (name, diem, coin, x, y, z) => {
     try {
-        return await productService.Savepoint(name, diem, coin);
+        return await productService.Savepoint(name, diem, coin, x, y, z);
     } catch (error) {
         console.log(error);
     }
