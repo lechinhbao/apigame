@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Page Title</title>
+    <!-- Add any additional head elements or stylesheets here -->
+</head>
+
+<body>
+
+    <div>
+        {{#if code}}
+        <p style="text-align: center;">GD thành công</p>
+        {{else}}
+        <p style="text-align: center; color: red;">GD thất bại</p>
+        {{/if}}
+
+        <p style="text-align: center;">
+            <button class="btn btn-default" id="closeTab">Về danh sách</button>
+        </p>
+    </div>
+
+    <!-- Add any additional script tags or body content here -->
+    <script>
+        // Your JavaScript code goes here
+        document.addEventListener("DOMContentLoaded", function () {
+            // Lấy phần tử button
+            var closeButton = document.getElementById("closeTab");
+            // Gắn sự kiện click cho nút
+            closeButton.addEventListener("click", function () {
+                // Đóng tab hiện tại
+                window.close();
+            });
+        });
+    </script>
+</body>
+
+</html>

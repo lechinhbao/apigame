@@ -17,33 +17,34 @@ router.get('/', async (req, res, next) => {
 
 
 // http://localhost:3000/cpanel/product/1/edit
-router.get('/:id/edit',async(req,res,next) =>{
+router.get('/:id/edit', async (req, res, next) => {
     try {
-        let{id} = req.params;
+        let { id } = req.params;
         const product = await productController.getProductById(id);
         const categories = await categoryController.getAllCategories();
-        console.log('produc error',product);
-        console.log('category error',categories);
-        return res.render('product/update',{ product,categories});
+        console.log('produc error', product);
+        console.log('category error', categories);
+        return res.render('product/update', { product, categories });
 
     } catch (error) {
         next(error);
     }
 });
 
-router.post('/:id/edit',async (req,res,next)=>{
+router.post('/:id/edit', async (req, res, next) => {
     try {
-        let{id}= req.params;
-        let{body}=req;
-        const {name,man,diem,coin}=body;
-        const result = await productController.addProduct(name,man,diem,coin)
-        if(result){
+        let { id } = req.params;
+        let { body } = req;
+        const { name, man, diem, coin } = body;
+        const result = await productController.addProduct(name, man, diem, coin)
+        if (result) {
             return res.redirect('/cpanel/product/');
         }
     } catch (error) {
-        next (error);
+        next(error);
     }
 });
+
 
 
 
